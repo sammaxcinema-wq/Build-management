@@ -10,7 +10,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="description" content="Budget, schedule and earned-value control for contractors." />
   
-  <!-- ===== PWA MANIFEST (inline with proper icon) ===== -->
+  <!-- ===== PWA MANIFEST (inline) ===== -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkJ1aWxkTWFuYWdlciBQcm8iLAogICJzaG9ydF9uYW1lIjogIkJ1aWxkTWFuYWdlciIsCiAgImRlc2NyaXB0aW9uIjogIkJ1ZGdldCwgc2NoZWR1bGUgYW5kIGVhcm5lZC12YWx1ZSBjb250cm9sIGZvciBjb250cmFjdG9ycy4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJzdGFydF91cmwiOiAiLiIsCiAgInNjb3BlIjogIi4iLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNFREVCRTQiLAogICJ0aGVtZV9jb2xvciI6ICIjMEIyNTQ1IiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiaHR0cHM6Ly9pLmliYi5jby94dGJLR3NYZi9maWxlLTAwMDAwMDAwOWY2YzgxZjQ5MzA2OGUwMDRlYjFlMGM3LnBuZyIsCiAgICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIiwKICAgICAgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIgogICAgfQogIF0KfQ==" />
   
   <!-- ===== APPLE TOUCH ICON ===== -->
@@ -1563,11 +1563,11 @@ function updateOnlineStatus(){
 window.addEventListener('online', updateOnlineStatus);
 window.addEventListener('offline', updateOnlineStatus);
 
-/* ===== PWA SETUP (FULL with working install) ===== */
+/* ===== PWA SETUP (WORKING INSTALL BUTTON) ===== */
 function setupPWA(){
   let deferredPrompt = null;
   
-  // Listen for beforeinstallprompt event
+  // Listen for beforeinstallprompt
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
@@ -1579,36 +1579,36 @@ function setupPWA(){
     console.log('[PWA] beforeinstallprompt fired');
   });
 
-  // Handle app installed event
+  // App installed event
   window.addEventListener('appinstalled', () => {
     toast('App installed successfully! 🎉');
     const installBtn = $('#install-btn');
-    if (installBtn) {
-      installBtn.style.display = 'none';
-    }
+    if (installBtn) installBtn.style.display = 'none';
     console.log('[PWA] App installed');
   });
 
-  // Install button click handler — WORKS!
+  // Install button click handler
   const installBtn = $('#install-btn');
   if (installBtn) {
     installBtn.addEventListener('click', async () => {
       if (!deferredPrompt) {
-        toast('Open in Chrome/Edge to install', 'info');
+        toast('Install prompt not available. Try opening in Chrome or Edge.', 'info');
         return;
       }
       try {
         deferredPrompt.prompt();
         const result = await deferredPrompt.userChoice;
+        console.log('[PWA] User choice:', result.outcome);
         if (result.outcome === 'accepted') {
-          toast('Installation started!', 'check-circle');
+          toast('App installation started!', 'check-circle');
           installBtn.style.display = 'none';
         } else {
           toast('Installation declined', 'xmark');
         }
         deferredPrompt = null;
       } catch (err) {
-        toast('Install failed. Try again.', 'triangle-exclamation');
+        console.error('[PWA] Install error:', err);
+        toast('Installation failed. Try again.', 'triangle-exclamation');
         deferredPrompt = null;
       }
     });
@@ -1619,20 +1619,50 @@ function setupPWA(){
     try {
       const swCode = `
         const CACHE_NAME = 'buildmanager-pro-v5';
-        self.addEventListener('install', e => self.skipWaiting());
-        self.addEventListener('activate', e => self.clients.claim());
-        self.addEventListener('fetch', e => {
-          e.respondWith(
-            caches.match(e.request).then(r => r || fetch(e.request).catch(() => new Response('Offline', {status:503})))
+        const urlsToCache = [
+          '/',
+          'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
+          'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap',
+          'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js'
+        ];
+
+        self.addEventListener('install', (event) => {
+          event.waitUntil(
+            caches.open(CACHE_NAME)
+              .then((cache) => cache.addAll(urlsToCache).catch(() => {}))
+              .then(() => self.skipWaiting())
+          );
+        });
+
+        self.addEventListener('activate', (event) => {
+          event.waitUntil(
+            caches.keys().then((cacheNames) => {
+              return Promise.all(
+                cacheNames.map((cacheName) => {
+                  if (cacheName !== CACHE_NAME) return caches.delete(cacheName);
+                })
+              );
+            }).then(() => self.clients.claim())
+          );
+        });
+
+        self.addEventListener('fetch', (event) => {
+          event.respondWith(
+            caches.match(event.request)
+              .then((response) => response || fetch(event.request).catch(() => new Response('Offline', { status: 503 })))
           );
         });
       `;
+      
       const swBlob = new Blob([swCode], { type: 'application/javascript' });
       const swUrl = URL.createObjectURL(swBlob);
+      
       navigator.serviceWorker.register(swUrl, { scope: '/' })
-        .then(() => console.log('[SW] Registered'))
-        .catch(() => console.log('[SW] Registration skipped (sandbox)'));
-    } catch(e) { /* no-op */ }
+        .then((reg) => console.log('[SW] Registered:', reg))
+        .catch((err) => console.log('[SW] Registration error:', err));
+    } catch (err) {
+      console.log('[SW] Setup error:', err);
+    }
   }
 }
 
@@ -1648,7 +1678,7 @@ async function init(){
   renderAll();
   setSyncStatus('saved');
   
-  // Hide install button if already installed
+  // Check if already installed as standalone
   if (window.matchMedia('(display-mode: standalone)').matches) {
     const installBtn = $('#install-btn');
     if (installBtn) installBtn.style.display = 'none';

@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
+  <title>BuildManager Pro — PWA</title>
+  <meta name="theme-color" content="#0B2545" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="description" content="Budget, schedule and earned-value control for contractors." />
+  <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQnVpbGRNYW5hZ2VyIFBybyIsInNob3J0X25hbWUiOiJCdWlsZE1hbmFnZXIiLCJkZXNjcmlwdGlvbiI6IkJ1ZGdldCwgc2NoZWR1bGUgYW5kIGVhcm5lZC12YWx1ZSBjb250cm9sIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJzdGFydF91cmwiOiIuIiwic2NvcGUiOiIuIiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbCw8c3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDEwMCAxMDAnPjxyZWN0IHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyByeD0nMjAnIGZpbGw9JyMwQjI1NDUnLz48cGF0aCBkPSdNNTAgMjAgTDgyIDQwIFY0NSBIMTggVjQwIFonIGZpbGw9JyNGMkE5M0InLz48cmVjdCB4PSczMCcgeT0nNDUnIHdpZHRoPSc4JyBoZWlnaHQ9JzM1JyBmaWxsPScjRjJBOTNCJy8+PHJlY3QgeD0nNjInIHk9JzQ1JyB3aWR0aD0nOCcgaGVpZ2h0PSczNScgZmlsbD0nI0YyQTkzQicvPjxyZWN0IHg9JzI0JyB5PSc3Nicgd2lkdGg9JzUyJyBoZWlnaHQ9JzgnIHJ4PScyJyBmaWxsPScjRjJBOTNCJy8+PC9zdmc+In1dfQ==" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMEIyNTQ1Ii8+PHBhdGggZD0iTTUwIDIwIEw4MiA0MCBWNDUgSDE4IFY0MCBaIiBmaWxsPSIjRjJBOTNCIi8+PHJlY3QgeD0iMzAiIHk9IjQ1IiB3aWR0aD0iOCIgaGVpZ2h0PSIzNSIgZmlsbD0iI0YyQTkzQiIvPjxyZWN0IHg9IjYyIiB5PSI0NSIgd2lkdGg9IjgiIGhlaWdodD0iMzUiIGZpbGw9IiNGMkE5M0IiLz48cmVjdCB4PSIyNCIgeT0iNzYiIHdpZHRoPSI1MiIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iI0YyQTkzQiIvPjwvc3ZnPg==" />
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMEIyNTQ1Ii8+PHBhdGggZD0iTTUwIDIwIEw4MiA0MCBWNDUgSDE4IFY0MCBaIiBmaWxsPSIjRjJBOTNCIi8+PHJlY3QgeD0iMzAiIHk9IjQ1IiB3aWR0aD0iOCIgaGVpZ2h0PSIzNSIgZmlsbD0iI0YyQTkzQiIvPjxyZWN0IHg9IjYyIiB5PSI0NSIgd2lkdGg9IjgiIGhlaWdodD0iMzUiIGZpbGw9IiNGMkE5M0IiLz48cmVjdCB4PSIyNCIgeT0iNzYiIHdpZHRoPSI1MiIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iI0YyQTkzQiIvPjwvc3ZnPg==" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    /* ===== TOKENS ===== */
+    :root {
+      --navy: #0B2545; --navy-2: #123059; --navy-3: #1B3E70;
+      --steel: #3D5A73; --steel-light: #7C93A6;
+      --amber: #F2A93B; --amber-dark: #C97F17; --amber-soft: #FCEBC9;
+      --concrete: #EDEBE4; --concrete-2: #E2DFD6; --paper: #F8F6F1;
+      --ink: #161B22; --ink-soft: #535E6C; --ink-faint: #8996A3;
+      --brick: #B14538; --brick-soft: #F5DEDB;
+      --green: #3F7A5C; --green-soft: #DCEEE4;
+      --line: #DAD5C8; --line-2: #C7C1B1;
+      --radius: 14px; --radius-sm: 9px;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'IBM Plex Sans', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+      --shadow: 0 1px 2px rgba(11,37,69,.04), 0 8px 24px -12px rgba(11,37,69,.12);
+      --sidebar-w: 260px;
+      --transition: 0.2s ease;
+    }
+    html[data-theme="dark"] {
+      --navy: #0B2545; --navy-2: #0E2A52; --navy-3: #173C6E;
+      --steel: #8FA9BE; --steel-light: #5C7889;
+      --amber: #F2A93B; --amber-dark: #F4B85A; --amber-soft: #3A2E14;
+      --concrete: #0E141B; --concrete-2: #141C25; --paper: #111820;
+      --ink: #E8ECF1; --ink-soft: #AEBAC7; --ink-faint: #6C7A89;
+      --brick: #E27B6F; --brick-soft: #3A1E1B;
+      --green: #66B58C; --green-soft: #123023;
+      --line: #232C37; --line-2: #2C3844;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: var(--font-body);
+      background: var(--concrete);
+      color: var(--ink);
+      background-image: repeating-linear-gradient(0deg, rgba(11,37,69,.04) 0 1px, transparent 1px 32px), repeating-linear-gradient(90deg, rgba(11,37,69,.04) 0 1px, transparent 1px 32px);
+      min-height: 100vh;
+      transition: background-color .2s, color .2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    html[data-theme="dark"] body {
+      background-image: repeating-linear-gradient(0deg, rgba(143,169,190,.04) 0 1px, transparent 1px 32px), repeating-linear-gradient(90deg, rgba(143,169,190,.04) 0 1px, transparent 1px 32px);
+    }
+    ::selection { background: var(--amber-soft); }
+    .mono { font-family: var(--font-mono); }
+    :focus-visible { outline: 2px solid var(--amber-dark); outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+    /* ===== APP SHELL ===== */
+    .app-shell { display: grid; grid-template-columns: var(--sidebar-w) 1fr; min-height: 100vh; }
+    @media (max-width: 900px) { .app-shell { grid-template-columns: 1fr; } }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      background: var(--navy); color: #EAF0F7; padding: 20px 14px;
+      display: flex; flex-direction: column; gap: 6px; position: sticky; top: 0; height: 100vh;
+      overflow-y: auto; overscroll-behavior: contain;
+      transition: transform var(--transition), box-shadow var(--transition);
+      z-index: 60;
+    }
+    @media (max-width: 900px) {
+      .sidebar {
+        position: fixed; left: 0; top: 0; height: 100vh; width: min(82vw, 300px);
+        transform: translateX(-100%); box-shadow: 20px 0 40px rgba(0,0,0,.4);
+        border-radius: 0 12px 12px 0;
+      }
+      .sidebar.open { transform: translateX(0); }
+      .sidebar::after { content: ''; position: absolute; inset: 0; pointer-events: none; border-right: 1px solid rgba(255,255,255,.06); }
+    }
+    .brand {
+      display: flex; align-items: center; gap: 12px; padding: 4px 2px 18px;
+    }
+    .brand .mark {
+      width: 42px; height: 42px; border-radius: 12px; background: var(--amber); color: var(--navy);
+      display: flex; align-items: center; justify-content: center; font-size: 20px; flex: none;
+    }
+    .brand .name { font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: -.01em; line-height: 1.1; }
+    .brand .name small { display: block; font-family: var(--font-body); font-weight: 500; font-size: 10px; color: #9FB2C8; letter-spacing: .06em; text-transform: uppercase; margin-top: 2px; }
+
+    .project-switch { margin: 4px 0 16px; position: relative; }
+    .project-switch button {
+      width: 100%; text-align: left; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+      color: #EAF0F7; padding: 12px 14px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; cursor: pointer; font-size: 14px; font-weight: 500;
+      transition: background .15s;
+    }
+    .project-switch button:hover { background: rgba(255,255,255,.1); }
+    .project-switch .cur { overflow: hidden; }
+    .project-switch .cur .pname { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .project-switch .cur .pmeta { font-size: 11px; color: #9FB2C8; }
+    .project-menu {
+      position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: var(--navy-2);
+      border: 1px solid rgba(255,255,255,.14); border-radius: 12px; padding: 6px; z-index: 40;
+      display: none; box-shadow: 0 16px 40px rgba(0,0,0,.5);
+      backdrop-filter: blur(4px);
+    }
+    .project-menu.show { display: block; }
+    .project-menu .opt { padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; display: flex; justify-content: space-between; gap: 8px; }
+    .project-menu .opt:hover { background: rgba(255,255,255,.08); }
+    .project-menu .opt.active { background: rgba(242,169,59,.16); color: var(--amber); }
+    .project-menu .add-new { border-top: 1px solid rgba(255,255,255,.12); margin-top: 4px; padding-top: 8px; color: #9FB2C8; font-size: 12.5px; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    .project-menu .add-new:hover { color: #fff; }
+
+    nav.nav { display: flex; flex-direction: column; gap: 2px; flex: 1; margin: 4px 0; }
+    .nav a {
+      display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 10px;
+      text-decoration: none; color: #C4D2E0; font-size: 13.5px; font-weight: 500; cursor: pointer;
+      transition: background .1s, color .1s;
+    }
+    .nav a i { width: 20px; text-align: center; color: #8FA9BE; font-size: 15px; flex: none; }
+    .nav a:hover { background: rgba(255,255,255,.06); color: #fff; }
+    .nav a.active { background: rgba(242,169,59,.14); color: #fff; }
+    .nav a.active i { color: var(--amber); }
+    .nav a .pill {
+      margin-left: auto; background: var(--brick); color: #fff; font-size: 10px; font-weight: 700;
+      padding: 1px 8px; border-radius: 20px; line-height: 1.6;
+    }
+    .nav-section {
+      font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: #6E85A0;
+      padding: 18px 14px 6px; font-weight: 600;
+    }
+
+    .sidebar-foot {
+      margin-top: auto; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.08);
+      font-size: 11.5px; color: #8FA9BE; display: flex; flex-direction: column; gap: 10px;
+    }
+    .sync-row { display: flex; align-items: center; gap: 8px; }
+    .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex: none; }
+    .sync-dot.off { background: var(--brick); }
+    .sync-dot.saving { background: var(--amber); }
+    #install-btn {
+      display: none; align-items: center; gap: 10px; background: rgba(242,169,59,.12);
+      border: 1px solid rgba(242,169,59,.3); color: var(--amber); padding: 10px 14px;
+      border-radius: 12px; cursor: pointer; font-size: 13px; font-weight: 600;
+      transition: background .15s, border-color .15s;
+      width: 100%; justify-content: center;
+    }
+    #install-btn:hover { background: rgba(242,169,59,.2); border-color: var(--amber); }
+    #install-btn i { font-size: 15px; }
+
+    /* ===== TOPBAR ===== */
+    .topbar {
+      display: flex; align-items: center; gap: 12px; padding: 12px 20px;
+      background: var(--paper); border-bottom: 1px solid var(--line);
+      position: sticky; top: 0; z-index: 30;
+      flex-wrap: wrap; min-height: 64px;
+    }
+    .menu-toggle {
+      display: none; background: none; border: 1px solid var(--line-2); border-radius: 10px;
+      width: 40px; height: 40px; cursor: pointer; color: var(--ink); font-size: 16px;
+      align-items: center; justify-content: center; flex: none;
+    }
+    @media (max-width: 900px) { .menu-toggle { display: inline-flex; } }
+    .topbar h2 { font-family: var(--font-display); font-size: 18px; font-weight: 600; letter-spacing: -.01em; }
+    .topbar .sub-crumb { font-size: 12px; color: var(--ink-faint); }
+    .topbar-center { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+    .search-wrap {
+      position: relative; max-width: 200px; flex: 1; margin-left: auto;
+      display: flex; align-items: center;
+    }
+    .search-wrap i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--ink-faint); font-size: 13px; }
+    .search-wrap input {
+      width: 100%; padding: 9px 12px 9px 34px; border-radius: 30px; border: 1px solid var(--line-2);
+      background: var(--concrete); font-size: 13px; color: var(--ink);
+      transition: border .15s;
+    }
+    .search-wrap input:focus { border-color: var(--steel); outline: none; }
+    .topbar-actions {
+      display: flex; align-items: center; gap: 6px; flex: none;
+    }
+    .icon-btn {
+      background: var(--concrete); border: 1px solid var(--line-2); width: 40px; height: 40px;
+      border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: var(--ink); font-size: 15px; position: relative;
+      transition: background .15s, border-color .15s;
+    }
+    .icon-btn:hover { background: var(--concrete-2); }
+    .icon-btn .dot {
+      position: absolute; top: 6px; right: 6px; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--brick); border: 1.5px solid var(--paper);
+    }
+    .btn {
+      background: var(--paper); border: 1px solid var(--line-2); padding: 9px 18px;
+      border-radius: 30px; font-weight: 600; font-size: 13px; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px; color: var(--ink);
+      transition: .15s; white-space: nowrap;
+    }
+    .btn:hover { border-color: var(--steel); }
+    .btn-primary { background: var(--navy); border-color: var(--navy); color: #fff; }
+    .btn-primary:hover { background: var(--navy-3); border-color: var(--navy-3); }
+    .btn-amber { background: var(--amber); border-color: var(--amber); color: var(--navy); }
+    .btn-amber:hover { background: var(--amber-dark); border-color: var(--amber-dark); color: #fff; }
+    .btn-ghost { background: transparent; border-color: transparent; }
+    .btn-danger { color: var(--brick); border-color: var(--brick-soft); background: var(--brick-soft); }
+    .btn-danger:hover { background: var(--brick); color: #fff; border-color: var(--brick); }
+    .btn:disabled { opacity: .5; cursor: not-allowed; }
+    .btn-sm { padding: 6px 14px; font-size: 12px; border-radius: 24px; }
+
+    main.content { padding: 20px 22px 80px; max-width: 1500px; margin: 0 auto; width: 100%; }
+    .view { display: none; animation: fadein .2s ease; }
+    .view.active { display: block; }
+    @keyframes fadein { from { opacity:0; transform: translateY(4px); } to { opacity:1; transform: none; } }
+
+    /* ===== CARDS ===== */
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 20px; }
+    .grid-2 { display: grid; grid-template-columns: 1.5fr 1fr; gap: 18px; margin-bottom: 20px; }
+    .grid-2.even { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 980px) { .grid-2, .grid-2.even { grid-template-columns: 1fr; } }
+    @media (max-width: 480px) { .grid-4 { grid-template-columns: 1fr 1fr; } }
+
+    .bp-card {
+      position: relative; background: var(--paper); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow);
+      transition: border-color .15s;
+    }
+    .bp-card::before, .bp-card::after {
+      content: ''; position: absolute; width: 12px; height: 12px; pointer-events: none; opacity: .5;
+    }
+    .bp-card::before { top: 6px; left: 6px; border-top: 1.5px solid var(--steel-light); border-left: 1.5px solid var(--steel-light); }
+    .bp-card::after { bottom: 6px; right: 6px; border-bottom: 1.5px solid var(--steel-light); border-right: 1.5px solid var(--steel-light); }
+
+    .stat-card .label { font-size: 12px; color: var(--ink-soft); font-weight: 600; text-transform: uppercase; letter-spacing: .03em; display: flex; align-items: center; gap: 6px; }
+    .stat-card .value { font-family: var(--font-mono); font-size: 24px; font-weight: 600; margin-top: 6px; letter-spacing: -.01em; }
+    .stat-card .change { font-size: 11.5px; font-weight: 600; padding: 2px 10px; border-radius: 20px; display: inline-block; margin-top: 6px; }
+    .change.good { color: var(--green); background: var(--green-soft); }
+    .change.bad { color: var(--brick); background: var(--brick-soft); }
+    .change.neutral { color: var(--steel); background: rgba(61,90,115,.12); }
+
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; gap: 10px; flex-wrap: wrap; }
+    .card-header h3 { font-family: var(--font-display); font-weight: 600; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+    .card-header h3 i { color: var(--amber-dark); font-size: 14px; }
+    .link-btn { background: none; border: none; color: var(--navy); font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    html[data-theme="dark"] .link-btn { color: var(--amber); }
+
+    .progress-item { margin-bottom: 14px; }
+    .progress-item:last-child { margin-bottom: 0; }
+    .progress-item .top { display: flex; justify-content: space-between; font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+    .progress-item .top .amt { font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft); }
+    .progress-bar { height: 8px; background: var(--concrete-2); border-radius: 20px; overflow: hidden; }
+    .progress-bar .fill { height: 100%; border-radius: 20px; background: var(--navy); transition: width .3s ease; }
+    .fill.warn { background: var(--amber-dark); }
+    .fill.danger { background: var(--brick); }
+    .fill.ok { background: var(--green); }
+
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 500px; }
+    th { text-align: left; font-size: 10.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-faint); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+    td { padding: 10px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: rgba(61,90,115,.04); }
+    td.num, th.num { text-align: right; font-family: var(--font-mono); }
+
+    .row-actions { display: flex; gap: 6px; justify-content: flex-end; flex-wrap: nowrap; }
+    .icon-mini {
+      background: none; border: 1px solid var(--line-2); width: 28px; height: 28px; border-radius: 8px;
+      cursor: pointer; color: var(--ink-soft); font-size: 11px; display: inline-flex;
+      align-items: center; justify-content: center; transition: .15s;
+      flex: none;
+    }
+    .icon-mini:hover { border-color: var(--steel); color: var(--ink); }
+    .icon-mini.danger:hover { border-color: var(--brick); color: var(--brick); }
+
+    .tag { padding: 3px 10px; border-radius: 20px; font-size: 10.5px; font-weight: 600; display: inline-block; white-space: nowrap; }
+    .tag.neutral { background: var(--concrete-2); color: var(--ink-soft); }
+    .tag.warn { background: var(--amber-soft); color: var(--amber-dark); }
+    .tag.good { background: var(--green-soft); color: var(--green); }
+    .tag.bad { background: var(--brick-soft); color: var(--brick); }
+
+    .empty-state { text-align: center; padding: 30px 16px; color: var(--ink-faint); }
+    .empty-state i { font-size: 24px; margin-bottom: 8px; display: block; color: var(--line-2); }
+
+    .alert-row { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+    .alert-row:last-child { border-bottom: none; }
+    .alert-row i { margin-top: 2px; font-size: 14px; flex: none; width: 18px; }
+    .alert-row.crit i, .alert-row.crit strong { color: var(--brick); }
+    .alert-row.warn i, .alert-row.warn strong { color: var(--amber-dark); }
+    .alert-row.info i { color: var(--steel); }
+    .alert-row .msg { flex: 1; }
+
+    .milestone-row {
+      display: grid; grid-template-columns: 20px 1fr auto; gap: 12px;
+      align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line);
+    }
+    .milestone-row:last-child { border-bottom: none; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 2px; flex: none; }
+    .dot.green { background: var(--green); } .dot.orange { background: var(--amber-dark); }
+    .dot.red { background: var(--brick); } .dot.gray { background: var(--ink-faint); }
+    .milestone-row .m-name { font-weight: 600; font-size: 13.5px; }
+    .milestone-row .m-meta { font-size: 11px; color: var(--ink-faint); margin-top: 2px; }
+    .milestone-row .m-pct { font-family: var(--font-mono); font-weight: 600; font-size: 13px; text-align: right; }
+    .mini-progress { width: 100px; height: 6px; background: var(--concrete-2); border-radius: 20px; overflow: hidden; margin-top: 6px; }
+    .mini-progress .fill { height: 100%; }
+
+    .kpi-ribbon {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+      gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius-sm);
+      overflow: hidden; margin-top: 14px;
+    }
+    .kpi-cell { background: var(--paper); padding: 10px 12px; text-align: center; }
+    .kpi-cell .k-label { font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-faint); font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 4px; }
+    .kpi-cell .k-val { font-family: var(--font-mono); font-size: 16px; font-weight: 600; margin-top: 4px; }
+    .kpi-cell .k-val.good { color: var(--green); } .kpi-cell .k-val.bad { color: var(--brick); }
+
+    .chart-box { position: relative; height: 220px; }
+    .chart-box.sm { height: 170px; }
+
+    .title-block {
+      margin-top: 28px; border: 1px solid var(--line-2); border-radius: 10px; overflow: hidden;
+      background: var(--paper); display: grid; grid-template-columns: repeat(5, 1fr);
+      font-family: var(--font-mono); font-size: 11px;
+    }
+    @media (max-width: 700px) { .title-block { grid-template-columns: repeat(2, 1fr); } }
+    .title-block .tb-cell { padding: 10px 14px; border-right: 1px solid var(--line); border-top: 1px solid var(--line); }
+    .title-block .tb-cell:last-child { border-right: none; }
+    .title-block .tb-label { display: block; text-transform: uppercase; letter-spacing: .06em; font-size: 9px; color: var(--ink-faint); margin-bottom: 2px; font-family: var(--font-body); font-weight: 600; }
+    .title-block .tb-val { color: var(--ink); font-weight: 600; }
+
+    .toolbar {
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px;
+    }
+    .toolbar .grow { flex: 1; min-width: 120px; }
+    .field-inline { position: relative; }
+    .field-inline i { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--ink-faint); font-size: 12px; }
+    .field-inline input, .field-inline select { padding-left: 30px; }
+    select, input[type="text"], input[type="number"], input[type="date"], textarea {
+      border: 1px solid var(--line-2); background: var(--concrete); color: var(--ink);
+      border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; width: 100%;
+      transition: border .15s;
+    }
+    select:focus, input:focus, textarea:focus { outline: none; border-color: var(--steel); }
+    label.field-label { font-size: 12px; font-weight: 600; color: var(--ink-soft); margin-bottom: 4px; display: block; }
+    .field-row { margin-bottom: 14px; }
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* ===== MODAL ===== */
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(11,20,32,.5); backdrop-filter: blur(2px);
+      display: none; align-items: center; justify-content: center; z-index: 100; padding: 16px;
+    }
+    .modal-backdrop.show { display: flex; }
+    .modal {
+      background: var(--paper); border-radius: 18px; width: 100%; max-width: 500px;
+      max-height: 90vh; overflow-y: auto; box-shadow: 0 30px 60px rgba(0,0,0,.4);
+      border: 1px solid var(--line); margin: auto;
+    }
+    .modal-head { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+    .modal-head h3 { font-family: var(--font-display); font-size: 16px; font-weight: 600; }
+    .modal-body { padding: 18px 20px; }
+    .modal-foot { padding: 14px 20px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 10px; }
+    .close-x { background: none; border: none; font-size: 18px; color: var(--ink-faint); cursor: pointer; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .close-x:hover { background: var(--concrete-2); }
+
+    .toast-wrap { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 200; max-width: 90vw; }
+    .toast { background: var(--navy); color: #fff; padding: 12px 18px; border-radius: 12px; font-size: 13px; font-weight: 500; box-shadow: 0 12px 30px rgba(0,0,0,.3); display: flex; align-items: center; gap: 10px; animation: toastin .2s ease; }
+    .toast i { color: var(--amber); }
+    @keyframes toastin { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: none; } }
+
+    .offline-banner { display: none; background: var(--brick); color: #fff; text-align: center; font-size: 12px; font-weight: 600; padding: 8px; position: sticky; top: 0; z-index: 50; }
+    .offline-banner.show { display: block; }
+
+    .help-tip { color: var(--ink-faint); cursor: help; font-size: 12px; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 480px) {
+      .topbar { padding: 10px 14px; gap: 8px; }
+      .topbar h2 { font-size: 16px; }
+      .search-wrap { max-width: 110px; }
+      .search-wrap input { font-size: 12px; padding: 7px 8px 7px 28px; }
+      .btn { padding: 7px 12px; font-size: 12px; }
+      .icon-btn { width: 36px; height: 36px; font-size: 13px; }
+      main.content { padding: 12px 12px 60px; }
+      .bp-card { padding: 14px 14px; }
+      .stat-card .value { font-size: 20px; }
+      .card-header h3 { font-size: 14px; }
+      .grid-4 { gap: 10px; }
+      .grid-2 { gap: 12px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .title-block { grid-template-columns: 1fr 1fr; }
+      .milestone-row { grid-template-columns: 16px 1fr auto; gap: 8px; }
+      .kpi-ribbon { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (min-width: 901px) {
+      .sidebar { border-right: 1px solid rgba(255,255,255,.06); }
+    }
+
+    @media print {
+      .sidebar, .topbar, .menu-toggle, #install-btn, .icon-btn, .btn, .row-actions, .toolbar, .modal-backdrop, .toast-wrap { display: none !important; }
+      .app-shell { display: block; }
+      .view { display: block !important; }
+      .bp-card { break-inside: avoid; border: 1px solid #ccc; box-shadow: none; }
+      body { background: #fff; }
+    }
+
+    /* Currency selector in topbar */
+    .currency-selector {
+      display: flex; align-items: center; gap: 4px;
+      background: var(--concrete); border: 1px solid var(--line-2); border-radius: 30px;
+      padding: 4px 8px 4px 12px; font-size: 12px; font-weight: 600;
+      color: var(--ink); cursor: pointer; transition: .15s;
+    }
+    .currency-selector:hover { border-color: var(--steel); }
+    .currency-selector select {
+      background: transparent; border: none; font-weight: 600; font-size: 12px;
+      color: var(--ink); padding: 4px 2px; cursor: pointer; outline: none;
+      font-family: var(--font-mono);
+    }
+    .currency-selector select option { background: var(--paper); color: var(--ink); }
+  </style>
+</head>
+<body>
+
+<div id="offline-banner" class="offline-banner"><i class="fas fa-plug-circle-xmark"></i> You're offline — changes saved locally.</div>
+
+<div class="app-shell">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="mark"><i class="fas fa-hard-hat"></i></div>
+      <div class="name">BuildManager <span style="color:var(--amber)">Pro</span><small>Cost & schedule</small></div>
+    </div>
+
+    <div class="project-switch">
+      <button id="proj-switch-btn" aria-haspopup="listbox" aria-expanded="false">
+        <div class="cur"><div class="pname" id="ps-name">—</div><div class="pmeta" id="ps-meta">—</div></div>
+        <i class="fas fa-chevron-down" style="font-size:11px;color:#9FB2C8;"></i>
+      </button>
+      <div class="project-menu" id="project-menu" role="listbox"></div>
+    </div>
+
+    <nav class="nav" id="main-nav">
+      <a data-view="overview" class="active"><i class="fas fa-gauge-high"></i> Overview</a>
+      <a data-view="budget"><i class="fas fa-sack-dollar"></i> Budget & Costs</a>
+      <a data-view="changeorders"><i class="fas fa-file-circle-plus"></i> Change Orders <span class="pill" id="co-pill" style="display:none">0</span></a>
+      <a data-view="quotes"><i class="fas fa-file-signature"></i> Quotes & Bids</a>
+      <a data-view="schedule"><i class="fas fa-diagram-project"></i> Schedule (EVM)</a>
+      <a data-view="reports"><i class="fas fa-chart-simple"></i> Reports</a>
+      <div class="nav-section">Workspace</div>
+      <a data-view="settings"><i class="fas fa-gear"></i> Settings</a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <button id="install-btn"><i class="fas fa-arrow-down-to-line"></i> Install App</button>
+      <div class="sync-row"><span class="sync-dot" id="sync-dot"></span> <span id="sync-text">Ready</span></div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div>
+    <header class="topbar">
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
+      <div class="topbar-center">
+        <h2 id="topbar-title">Overview</h2>
+        <div class="sub-crumb" id="topbar-sub">Project pulse</div>
+      </div>
+      <div class="search-wrap">
+        <i class="fas fa-magnifying-glass"></i>
+        <input type="text" id="global-search" placeholder="Search…" />
+      </div>
+      <div class="topbar-actions">
+        <div class="currency-selector">
+          <i class="fas fa-coins" style="color:var(--amber-dark);"></i>
+          <select id="currency-select"></select>
+        </div>
+        <button class="icon-btn" id="theme-toggle" title="Toggle theme"><i class="fas fa-moon"></i></button>
+        <button class="icon-btn" id="alerts-btn" title="Alerts"><i class="fas fa-bell"></i><span class="dot" id="alerts-dot" style="display:none"></span></button>
+        <button class="btn btn-primary" id="new-project-btn"><i class="fas fa-plus"></i> <span class="hide-mobile">New</span></button>
+      </div>
+    </header>
+
+    <main class="content">
+      <!-- OVERVIEW -->
+      <section class="view active" id="view-overview">
+        <div class="grid-4" id="ov-stats"></div>
+        <div class="grid-2">
+          <div class="bp-card">
+            <div class="card-header">
+              <h3><i class="fas fa-chart-area"></i> S-Curve</h3>
+              <button class="link-btn" data-view-link="schedule">EVM <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="chart-box"><canvas id="scurve-chart"></canvas></div>
+          </div>
+          <div class="bp-card">
+            <div class="card-header"><h3><i class="fas fa-triangle-exclamation"></i> Alerts</h3></div>
+            <div id="ov-alerts"></div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="bp-card">
+            <div class="card-header"><h3><i class="fas fa-layer-group"></i> Budget vs Actual</h3></div>
+            <div id="ov-budget-bars"></div>
+          </div>
+          <div class="bp-card">
+            <div class="card-header"><h3><i class="fas fa-receipt"></i> Recent Expenses</h3></div>
+            <div id="ov-expenses"></div>
+          </div>
+        </div>
+        <div class="bp-card">
+          <div class="card-header"><h3><i class="fas fa-flag-checkered"></i> Milestones</h3></div>
+          <div id="ov-milestones"></div>
+        </div>
+        <div class="title-block" id="title-block"></div>
+      </section>
+
+      <!-- BUDGET -->
+      <section class="view" id="view-budget">
+        <div class="bp-card" style="margin-bottom:20px;">
+          <div class="card-header">
+            <h3><i class="fas fa-layer-group"></i> Budget Categories</h3>
+            <button class="btn btn-sm btn-primary" id="add-category-btn"><i class="fas fa-plus"></i> Add</button>
+          </div>
+          <div id="budget-cat-list"></div>
+        </div>
+        <div class="bp-card">
+          <div class="card-header"><h3><i class="fas fa-receipt"></i> Expense Ledger</h3></div>
+          <div class="toolbar">
+            <div class="field-inline grow"><i class="fas fa-magnifying-glass"></i><input type="text" id="exp-search" placeholder="Search…" /></div>
+            <select id="exp-filter-cat" style="max-width:130px;"><option value="">All cats</option></select>
+            <select id="exp-filter-flag" style="max-width:120px;">
+              <option value="">All flags</option><option value="ok">On est.</option><option value="over_estimate">Over</option><option value="unmatched">Unmatched</option>
+            </select>
+            <button class="btn btn-sm" id="export-expenses-btn"><i class="fas fa-download"></i></button>
+            <button class="btn btn-sm btn-primary" id="add-expense-btn"><i class="fas fa-plus"></i></button>
+          </div>
+          <div class="table-wrap"><table id="expense-table"><thead><tr>
+            <th>Date</th><th>Vendor</th><th>Desc</th><th>Category</th><th>PO</th><th class="num">Amount</th><th>Flag</th><th></th>
+          </tr></thead><tbody></tbody></table></div>
+          <div id="expense-empty" style="display:none"></div>
+        </div>
+      </section>
+
+      <!-- CHANGE ORDERS -->
+      <section class="view" id="view-changeorders">
+        <div class="bp-card">
+          <div class="card-header">
+            <h3><i class="fas fa-file-circle-plus"></i> Change Orders</h3>
+            <button class="btn btn-sm btn-primary" id="add-co-btn"><i class="fas fa-plus"></i> New</button>
+          </div>
+          <p style="font-size:12.5px; color:var(--ink-soft); margin-bottom:12px;">Approved COs update BAC and EVM.</p>
+          <div class="table-wrap"><table id="co-table"><thead><tr>
+            <th>Description</th><th>Submitted</th><th class="num">Amount</th><th>Status</th><th></th>
+          </tr></thead><tbody></tbody></table></div>
+          <div id="co-empty" style="display:none"></div>
+        </div>
+      </section>
+
+      <!-- QUOTES -->
+      <section class="view" id="view-quotes">
+        <div class="grid-4" id="quotes-stats"></div>
+        <div class="bp-card">
+          <div class="card-header">
+            <h3><i class="fas fa-file-signature"></i> Bid Pipeline</h3>
+            <button class="btn btn-sm btn-primary" id="add-quote-btn"><i class="fas fa-plus"></i> New</button>
+          </div>
+          <div class="table-wrap"><table id="quote-table"><thead><tr>
+            <th>Prospect / Trade</th><th>Submitted</th><th class="num">Est. Cost</th><th class="num">Quoted</th><th class="num">Markup</th><th>Status</th><th></th>
+          </tr></thead><tbody></tbody></table></div>
+          <div id="quote-empty" style="display:none"></div>
+        </div>
+      </section>
+
+      <!-- SCHEDULE -->
+      <section class="view" id="view-schedule">
+        <div class="bp-card" style="margin-bottom:20px;">
+          <div class="card-header">
+            <h3><i class="fas fa-gauge-high"></i> Earned Value</h3>
+            <span class="help-tip" title="As-of date for EVM"><i class="fas fa-circle-info"></i> <span id="evm-asof" class="mono"></span></span>
+          </div>
+          <div class="chart-box"><canvas id="scurve-chart-big"></canvas></div>
+          <div class="kpi-ribbon" id="evm-kpis"></div>
+        </div>
+        <div class="bp-card">
+          <div class="card-header">
+            <h3><i class="fas fa-diagram-project"></i> Milestones</h3>
+            <button class="btn btn-sm btn-primary" id="add-milestone-btn"><i class="fas fa-plus"></i> Add</button>
+          </div>
+          <div id="milestone-list"></div>
+        </div>
+      </section>
+
+      <!-- REPORTS -->
+      <section class="view" id="view-reports">
+        <div class="bp-card" style="margin-bottom:20px;">
+          <div class="card-header"><h3><i class="fas fa-chart-simple"></i> Export & Reporting</h3></div>
+          <p style="font-size:13px; color:var(--ink-soft); margin-bottom:14px;">Generate summary or export CSV.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <button class="btn btn-primary" id="print-report-btn"><i class="fas fa-print"></i> Print / PDF</button>
+            <button class="btn" id="export-all-expenses-btn"><i class="fas fa-download"></i> Expenses</button>
+            <button class="btn" id="export-quotes-btn"><i class="fas fa-download"></i> Quotes</button>
+            <button class="btn" id="export-co-btn"><i class="fas fa-download"></i> Change Orders</button>
+          </div>
+        </div>
+        <div class="bp-card" id="report-preview"></div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="view" id="view-settings">
+        <div class="grid-2 even">
+          <div class="bp-card">
+            <div class="card-header"><h3><i class="fas fa-building"></i> Project Details</h3></div>
+            <div id="settings-project-form"></div>
+          </div>
+          <div class="bp-card">
+            <div class="card-header"><h3><i class="fas fa-folder-tree"></i> All Projects</h3></div>
+            <div id="settings-project-list"></div>
+            <button class="btn btn-sm" style="margin-top:12px;" id="settings-new-project"><i class="fas fa-plus"></i> Add project</button>
+          </div>
+        </div>
+        <div class="grid-2 even">
+          <div class="bp-card">
+            <div class="card-header"><h3><i class="fas fa-swatchbook"></i> Appearance</h3></div>
+            <button class="btn" id="settings-theme-btn"><i class="fas fa-circle-half-stroke"></i> Toggle theme</button>
+          </div>
+          <div class="bp-card">
+            <div class="card-header"><h3><i class="fas fa-triangle-exclamation"></i> Danger Zone</h3></div>
+            <button class="btn btn-danger" id="reset-data-btn"><i class="fas fa-trash"></i> Reset all data</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="modal-backdrop"><div class="modal" id="modal"></div></div>
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ===== CURRENCY SYSTEM ===== */
+const CURRENCIES = {
+  USD: { symbol: '$', code: 'USD', locale: 'en-US', label: 'USD $' },
+  EUR: { symbol: '€', code: 'EUR', locale: 'de-DE', label: 'EUR €' },
+  GBP: { symbol: '£', code: 'GBP', locale: 'en-GB', label: 'GBP £' },
+  ZAR: { symbol: 'R', code: 'ZAR', locale: 'en-ZA', label: 'ZAR R' },
+  NGN: { symbol: '₦', code: 'NGN', locale: 'en-NG', label: 'NGN ₦' },
+  KES: { symbol: 'KSh', code: 'KES', locale: 'en-KE', label: 'KES KSh' },
+  GHS: { symbol: 'GH₵', code: 'GHS', locale: 'en-GH', label: 'GHS GH₵' },
+  UGX: { symbol: 'USh', code: 'UGX', locale: 'en-UG', label: 'UGX USh' },
+  TZS: { symbol: 'TSh', code: 'TZS', locale: 'en-TZ', label: 'TZS TSh' },
+};
+const DEFAULT_CURRENCY = 'USD';
+let currentCurrency = DEFAULT_CURRENCY;
+
+function fmtMoney(n, compact){
+  if(n===null || n===undefined || isNaN(n)) return '—';
+  const curr = CURRENCIES[currentCurrency] || CURRENCIES.USD;
+  try {
+    return new Intl.NumberFormat(curr.locale, {
+      style: 'currency',
+      currency: curr.code,
+      notation: compact ? 'compact' : 'standard',
+      maximumFractionDigits: compact ? 1 : 0,
+      minimumFractionDigits: 0,
+    }).format(n);
+  } catch(e) {
+    // fallback
+    return curr.symbol + ' ' + Number(n).toLocaleString('en-US', { maximumFractionDigits: 0 });
+  }
+}
+
+function getCurrencySymbol() {
+  return (CURRENCIES[currentCurrency] || CURRENCIES.USD).symbol;
+}
+
+function getCurrencyCode() {
+  return (CURRENCIES[currentCurrency] || CURRENCIES.USD).code;
+}
+
+/* ===== UTILS ===== */
+const $ = (sel,root)=> (root||document).querySelector(sel);
+const $$ = (sel,root)=> Array.from((root||document).querySelectorAll(sel));
+const uid = (p)=> (p||'id')+'_'+Math.random().toString(36).slice(2,9);
+const todayISO = ()=> new Date().toISOString().slice(0,10);
+const clamp = (n,a,b)=> Math.max(a,Math.min(b,n));
+
+function fmtDate(iso){
+  if(!iso) return '—';
+  const d = new Date(iso+'T00:00:00');
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+}
+function daysBetween(a,b){ return Math.round((new Date(b)-new Date(a))/86400000); }
+function escapeHtml(s){ return (s??'').toString().replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function csvEscape(v){ const s=(v??'').toString(); return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s; }
+function downloadCSV(filename, rows){
+  const csv = rows.map(r=>r.map(csvEscape).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download=filename; document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+function toast(msg, icon){
+  const el = document.createElement('div'); el.className='toast';
+  el.innerHTML = `<i class="fas fa-${icon||'circle-check'}"></i><span>${escapeHtml(msg)}</span>`;
+  $('#toast-wrap').appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity .3s'; setTimeout(()=>el.remove(),300); }, 2600);
+}
+
+/* ===== SEED ===== */
+function seedData(){
+  return {
+    theme: 'light',
+    currency: 'USD',
+    activeProjectId: 'p1',
+    projects: [
+      {
+        id:'p1', name:'Harbor Tower Renovation', client:'Harborview Holdings LLC', type:'Commercial · high-rise',
+        location:'Port District, Bay City', startDate:'2026-02-02', targetEndDate:'2026-12-18',
+        reportingDate: todayISO(), status:'active',
+        categories:[
+          {id:'c1', name:'Labor', budgeted:6600000},
+          {id:'c2', name:'Materials', budgeted:3600000},
+          {id:'c3', name:'Equipment', budgeted:1600000},
+          {id:'c4', name:'Subcontractor', budgeted:3000000},
+        ],
+        expenses:[
+          {id:uid('e'), catId:'c2', vendor:'Meridian Steel Supply', desc:'Structural steel delivery', amount:48200, date:'2026-07-22', po:'PO-823', flag:'unmatched'},
+          {id:uid('e'), catId:'c3', vendor:'Apex Crane Rentals', desc:'Tower crane rental', amount:12850, date:'2026-07-21', po:'PO-810', flag:'ok'},
+          {id:uid('e'), catId:'c4', vendor:'Voltline Electrical', desc:'Electrical rough-in', amount:94500, date:'2026-07-19', po:'PO-799', flag:'ok'},
+          {id:uid('e'), catId:'c3', vendor:'ReadyMix Concrete', desc:'Concrete pump', amount:7300, date:'2026-07-18', po:'PO-817', flag:'over_estimate'},
+          {id:uid('e'), catId:'c1', vendor:'Framing Crew A', desc:'Weekly labor', amount:61200, date:'2026-07-17', po:'—', flag:'ok'},
+          {id:uid('e'), catId:'c2', vendor:'NorthGate Lumber', desc:'Lumber restock', amount:15400, date:'2026-07-14', po:'PO-806', flag:'ok'},
+        ],
+        changeOrders:[
+          {id:uid('co'), desc:'Upgraded curtain wall glazing', amount:320000, status:'pending', dateSubmitted:'2026-07-20'},
+          {id:uid('co'), desc:'Fire-rated stairwell doors', amount:41500, status:'approved', dateSubmitted:'2026-06-02'},
+          {id:uid('co'), desc:'Lobby finish upgrade', amount:88000, status:'approved', dateSubmitted:'2026-05-14'},
+          {id:uid('co'), desc:'Weekend shift premium', amount:26000, status:'rejected', dateSubmitted:'2026-04-28'},
+        ],
+        milestones:[
+          {id:uid('m'), name:'Site prep & demolition', order:1, plannedStart:'2026-02-02', plannedEnd:'2026-02-28', percentComplete:100, plannedCost:820000},
+          {id:uid('m'), name:'Foundation & reinforcement', order:2, plannedStart:'2026-03-01', plannedEnd:'2026-04-10', percentComplete:95, plannedCost:2150000},
+          {id:uid('m'), name:'Framing & structural steel', order:3, plannedStart:'2026-04-11', plannedEnd:'2026-06-20', percentComplete:68, plannedCost:3400000},
+          {id:uid('m'), name:'MEP rough-in', order:4, plannedStart:'2026-06-15', plannedEnd:'2026-08-05', percentComplete:32, plannedCost:2600000},
+          {id:uid('m'), name:'Interior build-out', order:5, plannedStart:'2026-08-06', plannedEnd:'2026-11-01', percentComplete:15, plannedCost:3900000},
+          {id:uid('m'), name:'Commissioning & closeout', order:6, plannedStart:'2026-11-02', plannedEnd:'2026-12-18', percentComplete:0, plannedCost:1330000},
+        ],
+      },
+      {
+        id:'p2', name:'Riverside School Addition', client:'Riverside Unified SD', type:'Institutional',
+        location:'Riverside, Bay City', startDate:'2026-04-01', targetEndDate:'2027-02-15',
+        reportingDate: todayISO(), status:'active',
+        categories:[
+          {id:'c5', name:'Labor', budgeted:1250000},
+          {id:'c6', name:'Materials', budgeted:980000},
+          {id:'c7', name:'Equipment', budgeted:340000},
+          {id:'c8', name:'Subcontractor', budgeted:630000},
+        ],
+        expenses:[
+          {id:uid('e'), catId:'c6', vendor:'BlueRock Building Supply', desc:'Masonry block', amount:38500, date:'2026-07-15', po:'PO-241', flag:'ok'},
+          {id:uid('e'), catId:'c5', vendor:'Sitework Crew', desc:'Weekly labor', amount:24100, date:'2026-07-12', po:'—', flag:'ok'},
+          {id:uid('e'), catId:'c8', vendor:'Precision HVAC', desc:'Design-assist deposit', amount:52000, date:'2026-07-08', po:'PO-233', flag:'ok'},
+        ],
+        changeOrders:[
+          {id:uid('co'), desc:'ADA ramp at east entrance', amount:22500, status:'approved', dateSubmitted:'2026-06-18'},
+        ],
+        milestones:[
+          {id:uid('m'), name:'Sitework & utilities', order:1, plannedStart:'2026-04-01', plannedEnd:'2026-05-10', percentComplete:100, plannedCost:410000},
+          {id:uid('m'), name:'Foundation', order:2, plannedStart:'2026-05-11', plannedEnd:'2026-06-20', percentComplete:80, plannedCost:520000},
+          {id:uid('m'), name:'Structural framing', order:3, plannedStart:'2026-06-21', plannedEnd:'2026-09-01', percentComplete:22, plannedCost:780000},
+          {id:uid('m'), name:'Envelope & roofing', order:4, plannedStart:'2026-09-02', plannedEnd:'2026-11-01', percentComplete:0, plannedCost:610000},
+          {id:uid('m'), name:'Interior finishes', order:5, plannedStart:'2026-11-02', plannedEnd:'2027-01-20', percentComplete:0, plannedCost:730000},
+          {id:uid('m'), name:'Closeout', order:6, plannedStart:'2027-01-21', plannedEnd:'2027-02-15', percentComplete:0, plannedCost:150000},
+        ],
+      },
+    ],
+    quotes:[
+      {id:uid('q'), name:'Metro Parking — Concrete', trade:'Concrete', estimatedCost:1180000, amount:1450000, status:'approved', dateSubmitted:'2026-06-10'},
+      {id:uid('q'), name:'Greenway Offices — Finish', trade:'Finish', estimatedCost:510000, amount:620000, status:'pending', dateSubmitted:'2026-07-05'},
+      {id:uid('q'), name:'Union Depot — Structural', trade:'Structural', estimatedCost:2650000, amount:3120000, status:'pending', dateSubmitted:'2026-07-14'},
+      {id:uid('q'), name:'Lakeside Clinic — HVAC', trade:'HVAC', estimatedCost:390000, amount:0, status:'draft', dateSubmitted:null},
+      {id:uid('q'), name:'Oakhurst Apartments — Site', trade:'Sitework', estimatedCost:720000, amount:0, status:'rejected', dateSubmitted:'2026-05-22'},
+    ],
+  };
+}
+
+/* ===== STATE ===== */
+const STORAGE_KEY = 'buildmanager-pro-state-v3';
+let state = null;
+let saveTimer = null;
+
+async function loadState(){
+  try{
+    const res = await window.storage.get(STORAGE_KEY, false);
+    if(res && res.value){ state = JSON.parse(res.value); return; }
+  }catch(e){ /* fall through */ }
+  state = seedData();
+}
+function scheduleSave(){
+  setSyncStatus('saving');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(async ()=>{
+    try{
+      const ok = await window.storage.set(STORAGE_KEY, JSON.stringify(state), false);
+      setSyncStatus(ok ? 'saved' : 'error');
+    }catch(e){ setSyncStatus('error'); }
+  }, 300);
+}
+function setSyncStatus(kind){
+  const dot = $('#sync-dot'), txt = $('#sync-text');
+  if(!dot) return;
+  if(kind==='saving'){ dot.className='sync-dot saving'; txt.textContent='Saving…'; }
+  else if(kind==='saved'){ dot.className='sync-dot'; txt.textContent='Saved · '+new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}); }
+  else { dot.className='sync-dot off'; txt.textContent='Save failed'; }
+}
+
+function activeProject(){ return state.projects.find(p=>p.id===state.activeProjectId); }
+function mutate(fn){ fn(); scheduleSave(); renderAll(); }
+
+/* ===== EVM ===== */
+function approvedChangeOrderTotal(proj){
+  return proj.changeOrders.filter(c=>c.status==='approved').reduce((s,c)=>s+c.amount,0);
+}
+function bac(proj){ return proj.categories.reduce((s,c)=>s+c.budgeted,0) + approvedChangeOrderTotal(proj); }
+function actualCost(proj){ return proj.expenses.reduce((s,e)=>s+e.amount,0); }
+function categorySpend(proj, catId){ return proj.expenses.filter(e=>e.catId===catId).reduce((s,e)=>s+e.amount,0); }
+function earnedValue(proj){
+  return proj.milestones.reduce((s,m)=> s + m.plannedCost * (clamp(m.percentComplete,0,100)/100), 0);
+}
+function plannedValue(proj, asOf){
+  const asOfDate = new Date(asOf);
+  return proj.milestones.reduce((s,m)=>{
+    const start = new Date(m.plannedStart), end = new Date(m.plannedEnd);
+    const total = Math.max(1, end-start);
+    const elapsed = clamp(asOfDate-start, 0, total);
+    return s + m.plannedCost*(elapsed/total);
+  }, 0);
+}
+function evmMetrics(proj){
+  const B = bac(proj);
+  const EV = earnedValue(proj);
+  const PV = plannedValue(proj, proj.reportingDate);
+  const AC = actualCost(proj);
+  const CPI = AC>0 ? EV/AC : null;
+  const SPI = PV>0 ? EV/PV : null;
+  const ETC = (CPI && CPI>0) ? (B-EV)/CPI : (B-EV);
+  const EAC = AC+ETC;
+  const VAC = B-EAC;
+  const pctComplete = B>0 ? (EV/B)*100 : 0;
+  return {BAC:B, EV, PV, AC, CPI, SPI, ETC, EAC, VAC, pctComplete};
+}
+function milestoneStatusDot(m){
+  const today = new Date();
+  const end = new Date(m.plannedEnd);
+  if(m.percentComplete>=100) return 'green';
+  if(today>end) return 'red';
+  const start=new Date(m.plannedStart), total=Math.max(1,end-start);
+  const expectedPct = clamp((today-start)/total,0,1)*100;
+  if(m.percentComplete < expectedPct-8) return 'orange';
+  return 'gray';
+}
+function computeAlerts(proj){
+  const alerts = [];
+  const ev = evmMetrics(proj);
+  proj.categories.forEach(c=>{
+    const spend = categorySpend(proj,c.id);
+    const pct = c.budgeted>0 ? spend/c.budgeted*100 : 0;
+    if(pct>=100) alerts.push({level:'crit', msg:`${c.name} over budget (${fmtMoney(spend)})`, icon:'circle-exclamation'});
+    else if(pct>=90) alerts.push({level:'warn', msg:`${c.name} spent ${pct.toFixed(0)}%`, icon:'triangle-exclamation'});
+  });
+  if(ev.CPI!==null && ev.CPI<0.95) alerts.push({level:'crit', msg:`CPI ${ev.CPI.toFixed(2)} — over budget`, icon:'coins'});
+  if(ev.SPI!==null && ev.SPI<0.95) alerts.push({level:'warn', msg:`SPI ${ev.SPI.toFixed(2)} — behind pace`, icon:'clock'});
+  proj.milestones.forEach(m=>{
+    const dot = milestoneStatusDot(m);
+    if(dot==='red' && m.percentComplete<100){
+      alerts.push({level:'crit', msg:`"${m.name}" past finish`, icon:'calendar-xmark'});
+    } else if(dot==='orange'){
+      alerts.push({level:'warn', msg:`"${m.name}" behind schedule`, icon:'hourglass-half'});
+    }
+  });
+  proj.expenses.filter(e=>e.flag==='over_estimate').forEach(e=> alerts.push({level:'warn', msg:`${e.vendor} over estimate`, icon:'flag'}));
+  proj.expenses.filter(e=>e.flag==='unmatched').forEach(e=> alerts.push({level:'info', msg:`${e.vendor} unmatched PO`, icon:'link-slash'}));
+  const pendingCO = proj.changeOrders.filter(c=>c.status==='pending');
+  if(pendingCO.length) alerts.push({level:'info', msg:`${pendingCO.length} CO(s) pending`, icon:'file-circle-question'});
+  return alerts;
+}
+
+/* ===== CHARTS ===== */
+let scurveChart=null, scurveChartBig=null;
+function chartColors(){
+  const dark = document.documentElement.getAttribute('data-theme')==='dark';
+  return { grid: dark?'rgba(255,255,255,.08)':'rgba(11,37,69,.08)', text: dark?'#AEBAC7':'#535E6C' };
+}
+function buildScurveDatasets(proj){
+  const sorted = [...proj.milestones].sort((a,b)=> new Date(a.plannedEnd)-new Date(b.plannedEnd));
+  const labels = sorted.map(m=>fmtDate(m.plannedEnd));
+  let cumPlanned=0, cumEarned=0;
+  const plannedSeries=[], earnedSeries=[];
+  sorted.forEach(m=>{ cumPlanned+=m.plannedCost; plannedSeries.push(cumPlanned); cumEarned += m.plannedCost*(m.percentComplete/100); earnedSeries.push(cumEarned); });
+  const AC = actualCost(proj);
+  const actualSeries = sorted.map((m,i)=> i===sorted.length-1 ? AC : Math.round(AC*(earnedSeries[i]/Math.max(1,cumEarned))));
+  return {labels, plannedSeries, earnedSeries, actualSeries};
+}
+function renderScurve(canvasEl, prevChartRef, proj){
+  if(!window.Chart) return prevChartRef;
+  const {labels, plannedSeries, earnedSeries, actualSeries} = buildScurveDatasets(proj);
+  const c = chartColors();
+  if(prevChartRef) prevChartRef.destroy();
+  return new Chart(canvasEl.getContext('2d'), {
+    type:'line',
+    data:{ labels, datasets:[
+      {label:'Planned', data:plannedSeries, borderColor:'#3D5A73', backgroundColor:'rgba(61,90,115,.08)', tension:.3, fill:true, pointRadius:2},
+      {label:'Earned', data:earnedSeries, borderColor:'#3F7A5C', backgroundColor:'rgba(63,122,92,.1)', tension:.3, fill:true, pointRadius:2},
+      {label:'Actual', data:actualSeries, borderColor:'#C97F17', backgroundColor:'rgba(201,127,23,.08)', tension:.3, fill:true, pointRadius:2, borderDash:[5,3]},
+    ]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{mode:'index', intersect:false},
+      plugins:{ legend:{position:'bottom', labels:{color:c.text, boxWidth:12, font:{size:10}}},
+        tooltip:{callbacks:{label:(ctx)=> ` ${ctx.dataset.label}: ${fmtMoney(ctx.parsed.y)}`}} },
+      scales:{ x:{grid:{color:c.grid}, ticks:{color:c.text, font:{size:9}}}, y:{grid:{color:c.grid}, ticks:{color:c.text, font:{size:9}, callback:(v)=>fmtMoney(v,true)}} }
+    }
+  });
+}
+
+/* ===== RENDER ===== */
+function renderSidebar(){
+  const proj = activeProject();
+  $('#ps-name').textContent = proj.name;
+  $('#ps-meta').textContent = proj.type;
+  const menu = $('#project-menu');
+  menu.innerHTML = state.projects.map(p=>`
+    <div class="opt ${p.id===proj.id?'active':''}" data-select-project="${p.id}" role="option">
+      <span>${escapeHtml(p.name)}</span><span class="mono" style="font-size:11px;">${fmtMoney(bac(p),true)}</span>
+    </div>`).join('') + `<div class="add-new" data-action="new-project"><i class="fas fa-plus"></i> New project</div>`;
+  const pendingCO = proj.changeOrders.filter(c=>c.status==='pending').length;
+  const coPill = $('#co-pill');
+  if(pendingCO>0){ coPill.style.display='inline-block'; coPill.textContent=pendingCO; } else coPill.style.display='none';
+  const alerts = computeAlerts(proj);
+  $('#alerts-dot').style.display = alerts.filter(a=>a.level==='crit').length > 0 ? 'block':'none';
+}
+
+function renderOverview(){
+  const proj = activeProject();
+  const ev = evmMetrics(proj);
+  const spendPct = ev.BAC>0 ? (ev.AC/ev.BAC*100) : 0;
+  $('#ov-stats').innerHTML = `
+    <div class="bp-card stat-card">
+      <div class="label"><i class="fas fa-coins"></i> BAC</div>
+      <div class="value">${fmtMoney(ev.BAC,true)}</div>
+      <span class="change neutral">incl. COs</span>
+    </div>
+    <div class="bp-card stat-card">
+      <div class="label"><i class="fas fa-receipt"></i> Actual Cost</div>
+      <div class="value">${fmtMoney(ev.AC,true)}</div>
+      <span class="change ${spendPct>95?'bad':'neutral'}">${spendPct.toFixed(0)}% of budget</span>
+    </div>
+    <div class="bp-card stat-card">
+      <div class="label"><i class="fas fa-file-invoice"></i> Change Orders</div>
+      <div class="value">${proj.changeOrders.length}</div>
+      <span class="change ${proj.changeOrders.some(c=>c.status==='pending')?'bad':'good'}">${proj.changeOrders.filter(c=>c.status==='pending').length} pending</span>
+    </div>
+    <div class="bp-card stat-card">
+      <div class="label"><i class="fas fa-chart-line"></i> Progress</div>
+      <div class="value">${ev.pctComplete.toFixed(0)}%</div>
+      <span class="change ${ev.SPI!==null && ev.SPI<0.95 ? 'bad':'good'}">SPI ${ev.SPI!==null?ev.SPI.toFixed(2):'—'}</span>
+    </div>`;
+  scurveChart = renderScurve($('#scurve-chart'), scurveChart, proj);
+  const alerts = computeAlerts(proj);
+  $('#ov-alerts').innerHTML = alerts.length ? alerts.slice(0,5).map(a=>`
+    <div class="alert-row ${a.level}"><i class="fas fa-${a.icon}"></i><span class="msg">${escapeHtml(a.msg)}</span></div>
+  `).join('') : `<div class="empty-state"><i class="fas fa-check-circle" style="color:var(--green)"></i>No alerts</div>`;
+  $('#ov-budget-bars').innerHTML = proj.categories.map(c=>{
+    const spend = categorySpend(proj,c.id);
+    const pct = c.budgeted>0 ? clamp(spend/c.budgeted*100,0,140) : 0;
+    const cls = pct>=100?'danger':pct>=80?'warn':'ok';
+    return `<div class="progress-item">
+      <div class="top"><span>${escapeHtml(c.name)}</span><span class="amt">${fmtMoney(spend,true)} / ${fmtMoney(c.budgeted,true)}</span></div>
+      <div class="progress-bar"><div class="fill ${cls}" style="width:${Math.min(pct,100)}%"></div></div>
+    </div>`;
+  }).join('');
+  const recent = [...proj.expenses].sort((a,b)=> new Date(b.date)-new Date(a.date)).slice(0,4);
+  $('#ov-expenses').innerHTML = recent.length ? `<ul style="list-style:none;">${recent.map(e=>{
+    const cat = proj.categories.find(c=>c.id===e.catId);
+    return `<li style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:12.5px;">
+      <span>${escapeHtml(e.vendor)} <span style="color:var(--ink-faint)">· ${escapeHtml(cat?cat.name:'—')}</span></span>
+      <span><strong class="mono">${fmtMoney(e.amount)}</strong></span>
+    </li>`;
+  }).join('')}</ul>` : `<div class="empty-state"><i class="fas fa-receipt"></i>No expenses</div>`;
+  $('#ov-milestones').innerHTML = renderMilestoneRows(proj, true);
+  $('#title-block').innerHTML = `
+    <div class="tb-cell"><span class="tb-label">Project</span><span class="tb-val">${escapeHtml(proj.name)}</span></div>
+    <div class="tb-cell"><span class="tb-label">Client</span><span class="tb-val">${escapeHtml(proj.client)}</span></div>
+    <div class="tb-cell"><span class="tb-label">Sheet</span><span class="tb-val">Overview</span></div>
+    <div class="tb-cell"><span class="tb-label">As of</span><span class="tb-val">${fmtDate(proj.reportingDate)}</span></div>
+    <div class="tb-cell"><span class="tb-label">Status</span><span class="tb-val" style="text-transform:capitalize;">${proj.status}</span></div>`;
+}
+
+function renderMilestoneRows(proj, compact){
+  if(!proj.milestones.length) return `<div class="empty-state"><i class="fas fa-diagram-project"></i>No milestones</div>`;
+  return [...proj.milestones].sort((a,b)=>a.order-b.order).map(m=>{
+    const dot = milestoneStatusDot(m);
+    const barCls = dot==='green'?'ok':dot==='red'?'danger':dot==='orange'?'warn':'ok';
+    return `<div class="milestone-row" data-milestone-id="${m.id}">
+      <span class="dot ${dot}"></span>
+      <div>
+        <div class="m-name">${escapeHtml(m.name)}</div>
+        <div class="m-meta">${fmtDate(m.plannedStart)} → ${fmtDate(m.plannedEnd)} · ${fmtMoney(m.plannedCost,true)}</div>
+        ${compact ? `<div class="mini-progress"><div class="fill ${barCls}" style="width:${m.percentComplete}%;background:currentColor;"></div></div>`:''}
+      </div>
+      <div class="m-pct">${m.percentComplete}%</div>
+    </div>`;
+  }).join('');
+}
+
+function renderBudget(){
+  const proj = activeProject();
+  $('#budget-cat-list').innerHTML = proj.categories.map(c=>{
+    const spend = categorySpend(proj,c.id);
+    const pct = c.budgeted>0 ? clamp(spend/c.budgeted*100,0,999) : 0;
+    const cls = pct>=100?'danger':pct>=80?'warn':'ok';
+    return `<div class="progress-item">
+      <div class="top">
+        <span>${escapeHtml(c.name)}</span>
+        <span class="amt">${fmtMoney(spend)} / ${fmtMoney(c.budgeted)} (${pct.toFixed(0)}%)
+          <button class="icon-mini" data-edit-cat="${c.id}" title="Edit"><i class="fas fa-pen"></i></button>
+          <button class="icon-mini danger" data-del-cat="${c.id}" title="Delete"><i class="fas fa-trash"></i></button>
+        </span>
+      </div>
+      <div class="progress-bar"><div class="fill ${cls}" style="width:${Math.min(pct,100)}%"></div></div>
+    </div>`;
+  }).join('') || `<div class="empty-state"><i class="fas fa-layer-group"></i>No categories.</div>`;
+  const catFilter = $('#exp-filter-cat');
+  catFilter.innerHTML = `<option value="">All</option>` + proj.categories.map(c=>`<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
+  renderExpenseTable();
+}
+
+function renderExpenseTable(){
+  const proj = activeProject();
+  const q = ($('#exp-search').value||'').toLowerCase();
+  const catF = $('#exp-filter-cat').value;
+  const flagF = $('#exp-filter-flag').value;
+  let rows = [...proj.expenses].sort((a,b)=> new Date(b.date)-new Date(a.date));
+  rows = rows.filter(e=>{
+    if(catF && e.catId!==catF) return false;
+    if(flagF && e.flag!==flagF) return false;
+    if(q && !(e.vendor+' '+e.desc+' '+e.po).toLowerCase().includes(q)) return false;
+    return true;
+  });
+  const tbody = $('#expense-table tbody');
+  tbody.innerHTML = rows.map(e=>{
+    const cat = proj.categories.find(c=>c.id===e.catId);
+    const flagTag = e.flag==='over_estimate' ? '<span class="tag warn">Over</span>' : e.flag==='unmatched' ? '<span class="tag neutral">Unmatched</span>' : '<span class="tag good">OK</span>';
+    return `<tr>
+      <td>${fmtDate(e.date)}</td>
+      <td>${escapeHtml(e.vendor)}</td>
+      <td>${escapeHtml(e.desc)}</td>
+      <td>${escapeHtml(cat?cat.name:'—')}</td>
+      <td class="mono">${escapeHtml(e.po)}</td>
+      <td class="num">${fmtMoney(e.amount)}</td>
+      <td>${flagTag}</td>
+      <td><div class="row-actions">
+        <button class="icon-mini" data-edit-expense="${e.id}" title="Edit"><i class="fas fa-pen"></i></button>
+        <button class="icon-mini danger" data-del-expense="${e.id}" title="Delete"><i class="fas fa-trash"></i></button>
+      </div></td>
+    </tr>`;
+  }).join('');
+  $('#expense-empty').style.display = rows.length ? 'none':'block';
+  $('#expense-empty').innerHTML = `<div class="empty-state"><i class="fas fa-receipt"></i>No expenses match.</div>`;
+}
+
+function renderChangeOrders(){
+  const proj = activeProject();
+  const tbody = $('#co-table tbody');
+  const rows = [...proj.changeOrders].sort((a,b)=> new Date(b.dateSubmitted)-new Date(a.dateSubmitted));
+  tbody.innerHTML = rows.map(c=>{
+    const tag = c.status==='approved'?'good':c.status==='rejected'?'bad':'warn';
+    return `<tr>
+      <td>${escapeHtml(c.desc)}</td>
+      <td>${fmtDate(c.dateSubmitted)}</td>
+      <td class="num">${fmtMoney(c.amount)}</td>
+      <td><span class="tag ${tag}" style="text-transform:capitalize;">${c.status}</span></td>
+      <td><div class="row-actions">
+        ${c.status==='pending' ? `<button class="icon-mini" data-approve-co="${c.id}" title="Approve"><i class="fas fa-check"></i></button><button class="icon-mini danger" data-reject-co="${c.id}" title="Reject"><i class="fas fa-xmark"></i></button>`:''}
+        <button class="icon-mini danger" data-del-co="${c.id}" title="Delete"><i class="fas fa-trash"></i></button>
+      </div></td>
+    </tr>`;
+  }).join('');
+  $('#co-empty').style.display = rows.length ? 'none':'block';
+  $('#co-empty').innerHTML = `<div class="empty-state"><i class="fas fa-file-circle-plus"></i>No change orders.</div>`;
+}
+
+function renderQuotes(){
+  const decided = state.quotes.filter(q=>q.status==='approved'||q.status==='rejected');
+  const approved = state.quotes.filter(q=>q.status==='approved');
+  const conv = decided.length ? (approved.length/decided.length*100) : 0;
+  const markups = approved.filter(q=>q.estimatedCost>0).map(q=>(q.amount-q.estimatedCost)/q.estimatedCost*100);
+  const avgMarkup = markups.length ? markups.reduce((a,b)=>a+b,0)/markups.length : 0;
+  const pipelineVal = state.quotes.filter(q=>q.status==='pending').reduce((s,q)=>s+q.amount,0);
+  $('#quotes-stats').innerHTML = `
+    <div class="bp-card stat-card"><div class="label"><i class="fas fa-file-signature"></i> Total</div><div class="value">${state.quotes.length}</div></div>
+    <div class="bp-card stat-card"><div class="label"><i class="fas fa-percent"></i> Conversion</div><div class="value">${conv.toFixed(0)}%</div></div>
+    <div class="bp-card stat-card"><div class="label"><i class="fas fa-calculator"></i> Avg. Markup</div><div class="value">${avgMarkup.toFixed(0)}%</div></div>
+    <div class="bp-card stat-card"><div class="label"><i class="fas fa-hourglass-half"></i> Pipeline</div><div class="value">${fmtMoney(pipelineVal,true)}</div></div>`;
+  const tbody = $('#quote-table tbody');
+  const rows = [...state.quotes].sort((a,b)=> new Date(b.dateSubmitted||0)-new Date(a.dateSubmitted||0));
+  tbody.innerHTML = rows.map(q=>{
+    const markup = q.estimatedCost>0 && q.amount>0 ? ((q.amount-q.estimatedCost)/q.estimatedCost*100) : null;
+    const tag = q.status==='approved'?'good':q.status==='rejected'?'bad':q.status==='draft'?'neutral':'warn';
+    return `<tr>
+      <td><strong>${escapeHtml(q.name)}</strong><div style="color:var(--ink-faint);font-size:11px;">${escapeHtml(q.trade)}</div></td>
+      <td>${q.dateSubmitted?fmtDate(q.dateSubmitted):'—'}</td>
+      <td class="num">${fmtMoney(q.estimatedCost)}</td>
+      <td class="num">${q.amount>0?fmtMoney(q.amount):'—'}</td>
+      <td class="num">${markup!==null?markup.toFixed(0)+'%':'—'}</td>
+      <td><span class="tag ${tag}" style="text-transform:capitalize;">${q.status}</span></td>
+      <td><div class="row-actions">
+        <button class="icon-mini" data-edit-quote="${q.id}" title="Edit"><i class="fas fa-pen"></i></button>
+        <button class="icon-mini danger" data-del-quote="${q.id}" title="Delete"><i class="fas fa-trash"></i></button>
+      </div></td>
+    </tr>`;
+  }).join('');
+  $('#quote-empty').style.display = rows.length ? 'none':'block';
+  $('#quote-empty').innerHTML = `<div class="empty-state"><i class="fas fa-file-signature"></i>No quotes.</div>`;
+}
+
+function renderSchedule(){
+  const proj = activeProject();
+  const ev = evmMetrics(proj);
+  $('#evm-asof').textContent = fmtDate(proj.reportingDate);
+  scurveChartBig = renderScurve($('#scurve-chart-big'), scurveChartBig, proj);
+  const cpiCls = ev.CPI===null?'':ev.CPI>=1?'good':'bad';
+  const spiCls = ev.SPI===null?'':ev.SPI>=1?'good':'bad';
+  const vacCls = ev.VAC>=0?'good':'bad';
+  $('#evm-kpis').innerHTML = `
+    <div class="kpi-cell"><div class="k-label">BAC</div><div class="k-val">${fmtMoney(ev.BAC,true)}</div></div>
+    <div class="kpi-cell"><div class="k-label">PV</div><div class="k-val">${fmtMoney(ev.PV,true)}</div></div>
+    <div class="kpi-cell"><div class="k-label">EV</div><div class="k-val">${fmtMoney(ev.EV,true)}</div></div>
+    <div class="kpi-cell"><div class="k-label">AC</div><div class="k-val">${fmtMoney(ev.AC,true)}</div></div>
+    <div class="kpi-cell"><div class="k-label">CPI</div><div class="k-val ${cpiCls}">${ev.CPI!==null?ev.CPI.toFixed(2):'—'}</div></div>
+    <div class="kpi-cell"><div class="k-label">SPI</div><div class="k-val ${spiCls}">${ev.SPI!==null?ev.SPI.toFixed(2):'—'}</div></div>
+    <div class="kpi-cell"><div class="k-label">EAC</div><div class="k-val">${fmtMoney(ev.EAC,true)}</div></div>
+    <div class="kpi-cell"><div class="k-label">VAC</div><div class="k-val ${vacCls}">${fmtMoney(ev.VAC,true)}</div></div>`;
+  $('#milestone-list').innerHTML = renderMilestoneEditableRows(proj);
+}
+
+function renderMilestoneEditableRows(proj){
+  if(!proj.milestones.length) return `<div class="empty-state"><i class="fas fa-diagram-project"></i>No milestones.</div>`;
+  return [...proj.milestones].sort((a,b)=>a.order-b.order).map(m=>{
+    const dot = milestoneStatusDot(m);
+    return `<div class="milestone-row" data-milestone-id="${m.id}">
+      <span class="dot ${dot}"></span>
+      <div>
+        <div class="m-name">${escapeHtml(m.name)}</div>
+        <div class="m-meta">${fmtDate(m.plannedStart)} → ${fmtDate(m.plannedEnd)} · ${fmtMoney(m.plannedCost,true)}</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+          <input type="range" min="0" max="100" value="${m.percentComplete}" data-milestone-slider="${m.id}" style="width:140px;">
+          <span class="mono" style="font-size:12px;color:var(--ink-soft);" data-milestone-pct-label="${m.id}">${m.percentComplete}%</span>
+        </div>
+      </div>
+      <div class="row-actions" style="align-self:flex-start;">
+        <button class="icon-mini" data-edit-milestone="${m.id}" title="Edit"><i class="fas fa-pen"></i></button>
+        <button class="icon-mini danger" data-del-milestone="${m.id}" title="Delete"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderReports(){
+  const proj = activeProject();
+  const ev = evmMetrics(proj);
+  $('#report-preview').innerHTML = `
+    <div class="card-header"><h3><i class="fas fa-file-lines"></i> Summary — ${escapeHtml(proj.name)}</h3></div>
+    <div class="grid-4" style="margin-bottom:0;">
+      <div class="stat-card"><div class="label">BAC</div><div class="value" style="font-size:18px;">${fmtMoney(ev.BAC)}</div></div>
+      <div class="stat-card"><div class="label">Actual Cost</div><div class="value" style="font-size:18px;">${fmtMoney(ev.AC)}</div></div>
+      <div class="stat-card"><div class="label">EAC</div><div class="value" style="font-size:18px;">${fmtMoney(ev.EAC)}</div></div>
+      <div class="stat-card"><div class="label">VAC</div><div class="value" style="font-size:18px;">${fmtMoney(ev.VAC)}</div></div>
+    </div>
+    <div class="title-block" style="margin-top:16px;">
+      <div class="tb-cell"><span class="tb-label">Project</span><span class="tb-val">${escapeHtml(proj.name)}</span></div>
+      <div class="tb-cell"><span class="tb-label">Client</span><span class="tb-val">${escapeHtml(proj.client)}</span></div>
+      <div class="tb-cell"><span class="tb-label">Location</span><span class="tb-val">${escapeHtml(proj.location)}</span></div>
+      <div class="tb-cell"><span class="tb-label">As of</span><span class="tb-val">${fmtDate(proj.reportingDate)}</span></div>
+      <div class="tb-cell"><span class="tb-label">CPI / SPI</span><span class="tb-val">${ev.CPI!==null?ev.CPI.toFixed(2):'—'} / ${ev.SPI!==null?ev.SPI.toFixed(2):'—'}</span></div>
+    </div>`;
+}
+
+function renderSettings(){
+  const proj = activeProject();
+  $('#settings-project-form').innerHTML = `
+    <div class="field-row"><label class="field-label">Project name</label><input type="text" id="set-name" value="${escapeHtml(proj.name)}"></div>
+    <div class="field-row"><label class="field-label">Client</label><input type="text" id="set-client" value="${escapeHtml(proj.client)}"></div>
+    <div class="field-grid">
+      <div class="field-row"><label class="field-label">Start</label><input type="date" id="set-start" value="${proj.startDate}"></div>
+      <div class="field-row"><label class="field-label">Target end</label><input type="date" id="set-end" value="${proj.targetEndDate}"></div>
+    </div>
+    <div class="field-row"><label class="field-label">Reporting date (EVM as-of)</label><input type="date" id="set-reportdate" value="${proj.reportingDate}"></div>
+    <div class="field-row"><label class="field-label">Status</label>
+      <select id="set-status"><option value="active" ${proj.status==='active'?'selected':''}>Active</option><option value="on_hold" ${proj.status==='on_hold'?'selected':''}>On hold</option><option value="complete" ${proj.status==='complete'?'selected':''}>Complete</option></select>
+    </div>
+    <button class="btn btn-primary" id="save-project-settings"><i class="fas fa-floppy-disk"></i> Save</button>`;
+  $('#settings-project-list').innerHTML = state.projects.map(p=>`
+    <div class="milestone-row" style="grid-template-columns:1fr auto;">
+      <div><div class="m-name">${escapeHtml(p.name)}</div><div class="m-meta">${escapeHtml(p.client)} · ${fmtMoney(bac(p),true)}</div></div>
+      <div class="row-actions">
+        <button class="btn btn-sm ${p.id===state.activeProjectId?'btn-primary':''}" data-select-project="${p.id}">${p.id===state.activeProjectId?'Active':'Switch'}</button>
+        ${state.projects.length>1?`<button class="icon-mini danger" data-del-project="${p.id}" title="Delete"><i class="fas fa-trash"></i></button>`:''}
+      </div>
+    </div>`).join('');
+}
+
+function renderAll(){
+  renderSidebar();
+  renderOverview();
+  renderBudget();
+  renderChangeOrders();
+  renderQuotes();
+  renderSchedule();
+  renderReports();
+  renderSettings();
+  // Update currency selector
+  const sel = $('#currency-select');
+  if(sel) sel.value = currentCurrency;
+}
+
+/* ===== MODALS ===== */
+function openModal(title, bodyHtml, footButtons){
+  const modal = $('#modal');
+  modal.innerHTML = `
+    <div class="modal-head"><h3>${escapeHtml(title)}</h3><button class="close-x" data-close-modal><i class="fas fa-xmark"></i></button></div>
+    <div class="modal-body">${bodyHtml}</div>
+    <div class="modal-foot">${footButtons}</div>`;
+  $('#modal-backdrop').classList.add('show');
+  const first = modal.querySelector('input,select,textarea');
+  if(first) setTimeout(()=>first.focus(), 30);
+}
+function closeModal(){ $('#modal-backdrop').classList.remove('show'); $('#modal').innerHTML=''; }
+function categoryOptions(proj, selectedId){
+  return proj.categories.map(c=>`<option value="${c.id}" ${c.id===selectedId?'selected':''}>${escapeHtml(c.name)}</option>`).join('');
+}
+
+function openExpenseModal(existing){
+  const proj = activeProject();
+  openModal(existing?'Edit expense':'Add expense', `
+    <div class="field-row"><label class="field-label">Vendor</label><input type="text" id="f-vendor" value="${escapeHtml(existing?.vendor||'')}"></div>
+    <div class="field-row"><label class="field-label">Description</label><input type="text" id="f-desc" value="${escapeHtml(existing?.desc||'')}"></div>
+    <div class="field-grid">
+      <div class="field-row"><label class="field-label">Amount (${getCurrencyCode()})</label><input type="number" id="f-amount" min="0" step="0.01" value="${existing?.amount||''}"></div>
+      <div class="field-row"><label class="field-label">Date</label><input type="date" id="f-date" value="${existing?.date||todayISO()}"></div>
+    </div>
+    <div class="field-grid">
+      <div class="field-row"><label class="field-label">Category</label><select id="f-cat">${categoryOptions(proj, existing?.catId)}</select></div>
+      <div class="field-row"><label class="field-label">PO</label><input type="text" id="f-po" value="${escapeHtml(existing?.po||'—')}"></div>
+    </div>
+    <div class="field-row"><label class="field-label">Flag</label>
+      <select id="f-flag">
+        <option value="ok" ${existing?.flag==='ok'?'selected':''}>On estimate</option>
+        <option value="over_estimate" ${existing?.flag==='over_estimate'?'selected':''}>Over estimate</option>
+        <option value="unmatched" ${existing?.flag==='unmatched'?'selected':''}>Unmatched</option>
+      </select>
+    </div>`,
+    `<button class="btn" data-close-modal>Cancel</button><button class="btn btn-primary" id="save-expense-btn">${existing?'Save':'Add'}</button>`);
+  $('#save-expense-btn').onclick = ()=>{
+    const vendor = $('#f-vendor').value.trim();
+    const amount = parseFloat($('#f-amount').value);
+    if(!vendor || isNaN(amount) || amount<=0){ toast('Enter vendor and amount','triangle-exclamation'); return; }
+    const data = { vendor, desc:$('#f-desc').value.trim(), amount, date:$('#f-date').value||todayISO(), catId:$('#f-cat').value, po:$('#f-po').value.trim()||'—', flag:$('#f-flag').value };
+    mutate(()=>{ const p = activeProject(); if(existing) Object.assign(existing, data); else p.expenses.push({id:uid('e'), ...data}); });
+    toast(existing?'Expense updated':'Expense added');
+    closeModal();
+  };
+}
+function openCategoryModal(existing){
+  openModal(existing?'Edit category':'Add category', `
+    <div class="field-row"><label class="field-label">Name</label><input type="text" id="f-cat-name" value="${escapeHtml(existing?.name||'')}"></div>
+    <div class="field-row"><label class="field-label">Budgeted amount (${getCurrencyCode()})</label><input type="number" id="f-cat-budget" min="0" step="0.01" value="${existing?.budgeted||''}"></div>`,
+    `<button class="btn" data-close-modal>Cancel</button><button class="btn btn-primary" id="save-cat-btn">${existing?'Save':'Add'}</button>`);
+  $('#save-cat-btn').onclick = ()=>{
+    const name = $('#f-cat-name').value.trim();
+    const budgeted = parseFloat($('#f-cat-budget').value);
+    if(!name || isNaN(budgeted) || budgeted<0){ toast('Enter name and budget','triangle-exclamation'); return; }
+    mutate(()=>{ const p = activeProject(); if(existing){ existing.name=name; existing.budgeted=budgeted; } else p.categories.push({id:uid('c'), name, budgeted}); });
+    toast(existing?'Category updated':'Category added');
+    closeModal();
+  };
+}
+function openCOModal(existing){
+  openModal(existing?'Edit change order':'New change order', `
+    <div class="field-row"><label class="field-label">Description</label><input type="text" id="f-co-desc" value="${escapeHtml(existing?.desc||'')}"></div>
+    <div class="field-grid">
+      <div class="field-row"><label class="field-label">Amount (${getCurrencyCode()})</label><input type="number" id="f-co-amount" min="0" step="0.01" value="${existing?.amount||''}"></div>
+      <div class="field-row"><label class="field-label">Date</label><input type="date" id="f-co-date" value="${existing?.dateSubmitted||todayISO()}"></div>
+    </div>`,
+    `<button class="btn" data-close-modal>Cancel</button><button class="btn btn-primary" id="save-co-btn">${existing?'Save':'Submit'}</button>`);
+  $('#save-co-btn').onclick = ()=>{
+    const desc = $('#f-co-desc').value.trim();
+    const amount = parseFloat($('#f-co-amount').value);
+    if(!desc || isNaN(amount) || amount<=0){ toast('Enter description and amount','triangle-exclamation'); return; }
+    mutate(()=>{ const p = activeProject(); if(existing){ existing.desc=desc; existing.amount=amount; existing.dateSubmitted=$('#f-co-date').value; } else p.changeOrders.push({id:uid('co'), desc, amount, status:'pending', dateSubmitted:$('#f-co-date').value||todayISO()}); });
+    toast(existing?'CO updated':'CO submitted');
+    closeModal();
+  };
+}
+function openQuoteModal(existing){
+  openModal(existing?'Edit quote':'New quote', `
+    <div class="field-row"><label class="field-label">Prospect</label><input type="text" id="f-q-name" value="${escapeHtml(existing?.name||'')}"></div>
+    <div class="field-row"><label class="field-label">Trade</label><input type="text" id="f-q-trade" value="${escapeHtml(existing?.trade||'')}"></div>
+    <div class="field-grid">
+      <div class="field-row"><label class="field-label">Est. Cost (${getCurrencyCode()})</label><input type="number" id="f-q-est" min="0" step="0.01" value="${existing?.estimatedCost||''}"></div>
+      <div class="field-row"><label class="field-label">Quoted (${getCurrencyCode()})</label><input type="number" id="f-q-amount" min="0" step="0.01" value="${existing?.amount||''}"></div>
+    </div>
+    <div class="field-grid">
+      <div class="field-row"><label class="field-label">Date</label><input type="date" id="f-q-date" value="${existing?.dateSubmitted||todayISO()}"></div>
+      <div class="field-row"><label class="field-label">Status</label>
+        <select id="f-q-status">
+          <option value="draft" ${existing?.status==='draft'?'selected':''}>Draft</option>
+          <option value="pending" ${existing?.status==='pending'?'selected':''}>Pending</option>
+          <option value="approved" ${existing?.status==='approved'?'selected':''}>Approved</option>
+          <option value="rejected" ${existing?.status==='rejected'?'selected':''}>Rejected</option>
+        </select>
+      </div>
+    </div>`,
+    `<button class="btn" data-close-modal>Cancel</button><button class="btn btn-primary" id="save-quote-btn">${existing?'Save':'Add'}</button>`);
+  $('#save-quote-btn').onclick = ()=>{
+    const name = $('#f-q-name').value.trim();
+    const estimatedCost = parseFloat($('#f-q-est').value)||0;
+    const amount = parseFloat($('#f-q-amount').value)||0;
+    if(!name){ toast('Enter a prospect name','triangle-exclamation'); return; }
+    const data = {name, trade:$('#f-q-trade').value.trim()||'General', estimatedCost, amount, dateSubmitted:$('#f-q-date').value||null, status:$('#f-q-status').value};
+    mutate(()=>{ if(existing) Object.assign(existing, data); else state.quotes.push({id:uid('q'), ...data}); });
+    toast(existing?'Quote updated':'Quote added');
+    closeModal();
+  };
+}
+function openMilestoneModal(existing){
+  const proj = activeProject();
+  openModal(existing?'Edit milestone':'Add milestone', `
+    <div class="field-row"><label class="field-label">Name</label><input type="text" id="f-m-name" value="${escapeHtml(existing?.name||'')}"></div>
+    <div class="field-grid">
+      <div class="field-row"><label class="field-label">Start</label><input type="date" id="f-m-start" value="${existing?.plannedStart||todayISO()}"></div>
+      <div class="field-row"><label class="field-label">Finish</label><input type="date" id="f-m-end" value="${existing?.plannedEnd||todayISO()}"></div>
+    </div>
+    <div class="field-grid">
+      <div class="field-row"><label class="field-label">Planned Cost (${getCurrencyCode()})</label><input type="number" id="f-m-cost" min="0" step="0.01" value="${existing?.plannedCost||''}"></div>
+      <div class="field-row"><label class="field-label">% Complete</label><input type="number" id="f-m-pct" min="0" max="100" value="${existing?.percentComplete??0}"></div>
+    </div>`,
+    `<button class="btn" data-close-modal>Cancel</button><button class="btn btn-primary" id="save-m-btn">${existing?'Save':'Add'}</button>`);
+  $('#save-m-btn').onclick = ()=>{
+    const name = $('#f-m-name').value.trim();
+    const plannedCost = parseFloat($('#f-m-cost').value);
+    const plannedStart = $('#f-m-start').value, plannedEnd = $('#f-m-end').value;
+    if(!name || isNaN(plannedCost) || plannedCost<0 || !plannedStart || !plannedEnd){ toast('Fill all fields','triangle-exclamation'); return; }
+    if(new Date(plannedEnd) < new Date(plannedStart)){ toast('Finish after start','triangle-exclamation'); return; }
+    const pct = clamp(parseInt($('#f-m-pct').value)||0,0,100);
+    mutate(()=>{ const p = activeProject(); if(existing){ Object.assign(existing, {name, plannedStart, plannedEnd, plannedCost, percentComplete:pct}); } else p.milestones.push({id:uid('m'), name, order:p.milestones.length+1, plannedStart, plannedEnd, plannedCost, percentComplete:pct}); });
+    toast(existing?'Milestone updated':'Milestone added');
+    closeModal();
+  };
+}
+function openNewProjectModal(){
+  openModal('New project', `
+    <div class="field-row"><label class="field-label">Project name</label><input type="text" id="f-p-name"></div>
+    <div class="field-row"><label class="field-label">Client</label><input type="text" id="f-p-client"></div>
+    <div class="field-grid">
+      <div class="field-row"><label class="field-label">Start</label><input type="date" id="f-p-start" value="${todayISO()}"></div>
+      <div class="field-row"><label class="field-label">Target end</label><input type="date" id="f-p-end" value="${todayISO()}"></div>
+    </div>
+    <div class="field-row"><label class="field-label">Initial budget (${getCurrencyCode()})</label><input type="number" id="f-p-budget" min="0" step="0.01" placeholder="0"></div>`,
+    `<button class="btn" data-close-modal>Cancel</button><button class="btn btn-primary" id="save-p-btn">Create</button>`);
+  $('#save-p-btn').onclick = ()=>{
+    const name = $('#f-p-name').value.trim();
+    const budget = parseFloat($('#f-p-budget').value)||0;
+    if(!name){ toast('Enter project name','triangle-exclamation'); return; }
+    const id = uid('p');
+    mutate(()=>{
+      state.projects.push({ id, name, client:$('#f-p-client').value.trim()||'—', type:'Commercial', location:'—',
+        startDate:$('#f-p-start').value||todayISO(), targetEndDate:$('#f-p-end').value||todayISO(),
+        reportingDate: todayISO(), status:'active',
+        categories: budget>0 ? [{id:uid('c'), name:'General', budgeted:budget}] : [],
+        expenses:[], changeOrders:[], milestones:[] });
+      state.activeProjectId = id;
+    });
+    toast('Project created');
+    closeModal();
+  };
+}
+
+/* ===== EVENTS ===== */
+function setView(view){
+  $$('.view').forEach(v=>v.classList.remove('active'));
+  const el = $('#view-'+view); if(el) el.classList.add('active');
+  $$('.nav a[data-view]').forEach(a=>a.classList.toggle('active', a.dataset.view===view));
+  const titles = {overview:['Overview','Pulse & alerts'], budget:['Budget & Costs','Ledger'],
+    changeorders:['Change Orders','Scope changes'], quotes:['Quotes & Bids','Pipeline'],
+    schedule:['Schedule (EVM)','Earned value'], reports:['Reports','Export'], settings:['Settings','Preferences']};
+  if(titles[view]){ $('#topbar-title').textContent = titles[view][0]; $('#topbar-sub').textContent = titles[view][1]; }
+  if(window.innerWidth<=900) $('#sidebar').classList.remove('open');
+}
+
+function wireEvents(){
+  $('#main-nav').addEventListener('click', e=>{ const a=e.target.closest('a[data-view]'); if(a) setView(a.dataset.view); });
+  document.addEventListener('click', e=>{ const link=e.target.closest('[data-view-link]'); if(link) setView(link.dataset.viewLink); });
+  $('#menu-toggle').addEventListener('click', ()=> $('#sidebar').classList.toggle('open'));
+  $('#proj-switch-btn').addEventListener('click', (e)=>{ e.stopPropagation(); $('#project-menu').classList.toggle('show'); });
+  document.addEventListener('click', (e)=>{ if(!e.target.closest('.project-switch')) $('#project-menu').classList.remove('show'); });
+  $('#project-menu').addEventListener('click', e=>{
+    const opt = e.target.closest('[data-select-project]');
+    const addNew = e.target.closest('[data-action="new-project"]');
+    if(opt){ state.activeProjectId = opt.dataset.selectProject; scheduleSave(); renderAll(); $('#project-menu').classList.remove('show'); toast('Switched project'); }
+    if(addNew){ openNewProjectModal(); $('#project-menu').classList.remove('show'); }
+  });
+  document.addEventListener('click', e=>{
+    const btn = e.target.closest('[data-select-project]');
+    if(btn && !e.target.closest('.project-menu')){ state.activeProjectId = btn.dataset.selectProject; scheduleSave(); renderAll(); toast('Switched project'); }
+  });
+  $('#new-project-btn').addEventListener('click', openNewProjectModal);
+  $('#settings-new-project').addEventListener('click', openNewProjectModal);
+  $('#theme-toggle').addEventListener('click', toggleTheme);
+  $('#settings-theme-btn').addEventListener('click', toggleTheme);
+  $('#alerts-btn').addEventListener('click', ()=> setView('overview'));
+  $('#modal-backdrop').addEventListener('click', e=>{ if(e.target.id==='modal-backdrop') closeModal(); });
+  document.addEventListener('click', e=>{ if(e.target.closest('[data-close-modal]')) closeModal(); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+  $('#add-category-btn').addEventListener('click', ()=>openCategoryModal(null));
+  $('#add-expense-btn').addEventListener('click', ()=>openExpenseModal(null));
+  $('#exp-search').addEventListener('input', renderExpenseTable);
+  $('#exp-filter-cat').addEventListener('change', renderExpenseTable);
+  $('#exp-filter-flag').addEventListener('change', renderExpenseTable);
+  $('#export-expenses-btn').addEventListener('click', ()=>exportExpensesCSV(activeProject()));
+  $('#budget-cat-list').addEventListener('click', e=>{
+    const editBtn = e.target.closest('[data-edit-cat]'); const delBtn = e.target.closest('[data-del-cat]');
+    const proj = activeProject();
+    if(editBtn) openCategoryModal(proj.categories.find(c=>c.id===editBtn.dataset.editCat));
+    if(delBtn){ const cat = proj.categories.find(c=>c.id===delBtn.dataset.delCat); if(proj.expenses.some(e=>e.catId===cat.id)){ toast('Reassign expenses first','triangle-exclamation'); return; } mutate(()=>{ proj.categories = proj.categories.filter(c=>c.id!==cat.id); }); toast('Category deleted'); }
+  });
+  $('#expense-table').addEventListener('click', e=>{
+    const editBtn = e.target.closest('[data-edit-expense]'); const delBtn = e.target.closest('[data-del-expense]');
+    const proj = activeProject();
+    if(editBtn) openExpenseModal(proj.expenses.find(x=>x.id===editBtn.dataset.editExpense));
+    if(delBtn){ mutate(()=>{ proj.expenses = proj.expenses.filter(x=>x.id!==delBtn.dataset.delExpense); }); toast('Expense deleted'); }
+  });
+  $('#add-co-btn').addEventListener('click', ()=>openCOModal(null));
+  $('#co-table').addEventListener('click', e=>{
+    const proj = activeProject();
+    const approve = e.target.closest('[data-approve-co]'); const reject = e.target.closest('[data-reject-co]'); const del = e.target.closest('[data-del-co]');
+    if(approve){ mutate(()=>{ proj.changeOrders.find(c=>c.id===approve.dataset.approveCo).status='approved'; }); toast('CO approved'); }
+    if(reject){ mutate(()=>{ proj.changeOrders.find(c=>c.id===reject.dataset.rejectCo).status='rejected'; }); toast('CO rejected'); }
+    if(del){ mutate(()=>{ proj.changeOrders = proj.changeOrders.filter(c=>c.id!==del.dataset.delCo); }); toast('CO removed'); }
+  });
+  $('#add-quote-btn').addEventListener('click', ()=>openQuoteModal(null));
+  $('#quote-table').addEventListener('click', e=>{
+    const edit = e.target.closest('[data-edit-quote]'); const del = e.target.closest('[data-del-quote]');
+    if(edit) openQuoteModal(state.quotes.find(q=>q.id===edit.dataset.editQuote));
+    if(del){ mutate(()=>{ state.quotes = state.quotes.filter(q=>q.id!==del.dataset.delQuote); }); toast('Quote removed'); }
+  });
+  $('#add-milestone-btn').addEventListener('click', ()=>openMilestoneModal(null));
+  $('#milestone-list').addEventListener('click', e=>{
+    const proj = activeProject();
+    const edit = e.target.closest('[data-edit-milestone]'); const del = e.target.closest('[data-del-milestone]');
+    if(edit) openMilestoneModal(proj.milestones.find(m=>m.id===edit.dataset.editMilestone));
+    if(del){ mutate(()=>{ proj.milestones = proj.milestones.filter(m=>m.id!==del.dataset.delMilestone); }); toast('Milestone removed'); }
+  });
+  $('#milestone-list').addEventListener('input', e=>{
+    const slider = e.target.closest('[data-milestone-slider]');
+    if(!slider) return;
+    const proj = activeProject();
+    const m = proj.milestones.find(x=>x.id===slider.dataset.milestoneSlider);
+    m.percentComplete = parseInt(slider.value);
+    $(`[data-milestone-pct-label="${m.id}"]`).textContent = m.percentComplete+'%';
+    scheduleSave();
+    renderSchedule(); renderOverview(); renderSidebar();
+  });
+  $('#print-report-btn').addEventListener('click', ()=> window.print());
+  $('#export-all-expenses-btn').addEventListener('click', ()=>exportExpensesCSV(activeProject()));
+  $('#export-quotes-btn').addEventListener('click', ()=>{
+    downloadCSV('quotes.csv', [['Name','Trade','Estimated Cost','Quoted Amount','Status','Date'],
+      ...state.quotes.map(q=>[q.name,q.trade,q.estimatedCost,q.amount,q.status,q.dateSubmitted||''])]);
+    toast('Quotes exported');
+  });
+  $('#export-co-btn').addEventListener('click', ()=>{
+    const proj = activeProject();
+    downloadCSV('change-orders.csv', [['Description','Amount','Status','Date'],
+      ...proj.changeOrders.map(c=>[c.desc,c.amount,c.status,c.dateSubmitted])]);
+    toast('COs exported');
+  });
+  document.addEventListener('click', e=>{
+    if(e.target.id==='save-project-settings'){
+      const proj = activeProject();
+      mutate(()=>{ proj.name=$('#set-name').value.trim()||proj.name; proj.client=$('#set-client').value.trim()||proj.client; proj.startDate=$('#set-start').value||proj.startDate; proj.targetEndDate=$('#set-end').value||proj.targetEndDate; proj.reportingDate=$('#set-reportdate').value||proj.reportingDate; proj.status=$('#set-status').value; });
+      toast('Settings saved');
+    }
+  });
+  $('#settings-project-list').addEventListener('click', e=>{
+    const del = e.target.closest('[data-del-project]');
+    if(del){ if(state.projects.length<=1){ toast('Need at least one project','triangle-exclamation'); return; } mutate(()=>{ state.projects = state.projects.filter(p=>p.id!==del.dataset.delProject); if(state.activeProjectId===del.dataset.delProject) state.activeProjectId = state.projects[0].id; }); toast('Project deleted'); }
+  });
+  $('#reset-data-btn').addEventListener('click', async ()=>{
+    if(!confirm('Reset all data to demo?')) return;
+    state = seedData();
+    state.currency = currentCurrency;
+    scheduleSave();
+    renderAll();
+    toast('Reset to demo');
+  });
+  $('#global-search').addEventListener('input', e=>{
+    const val = e.target.value;
+    if(val.length>1){ setView('budget'); $('#exp-search').value = val; renderExpenseTable(); }
+  });
+
+  // Currency selector
+  const currencySelect = $('#currency-select');
+  if(currencySelect) {
+    currencySelect.innerHTML = Object.keys(CURRENCIES).map(key => 
+      `<option value="${key}">${CURRENCIES[key].label}</option>`
+    ).join('');
+    currencySelect.value = currentCurrency;
+    currencySelect.addEventListener('change', (e) => {
+      currentCurrency = e.target.value;
+      state.currency = currentCurrency;
+      scheduleSave();
+      renderAll();
+      toast('Currency updated to ' + CURRENCIES[currentCurrency].label);
+    });
+  }
+}
+
+function exportExpensesCSV(proj){
+  downloadCSV(proj.name.replace(/\s+/g,'_')+'_expenses.csv', [['Date','Vendor','Description','Category','PO','Amount','Flag'],
+    ...proj.expenses.map(e=>{ const cat = proj.categories.find(c=>c.id===e.catId); return [e.date,e.vendor,e.desc,cat?cat.name:'',e.po,e.amount,e.flag]; })]);
+  toast('Expenses exported');
+}
+
+function toggleTheme(){
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur==='dark' ? 'light':'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  state.theme = next;
+  $('#theme-toggle i').className = next==='dark' ? 'fas fa-sun' : 'fas fa-moon';
+  scheduleSave();
+  scurveChart = renderScurve($('#scurve-chart'), scurveChart, activeProject());
+  scurveChartBig = renderScurve($('#scurve-chart-big'), scurveChartBig, activeProject());
+}
+
+/* ===== OFFLINE ===== */
+function updateOnlineStatus(){
+  $('#offline-banner').classList.toggle('show', !navigator.onLine);
+}
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+
+/* ===== PWA SETUP ===== */
+function setupPWA(){
+  let deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt', (e)=>{
+    e.preventDefault(); deferredPrompt = e;
+    $('#install-btn').style.display = 'flex';
+  });
+  window.addEventListener('appinstalled', ()=> toast('App installed'));
+  $('#install-btn').addEventListener('click', async ()=>{
+    if(!deferredPrompt) return;
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    $('#install-btn').style.display = 'none';
+  });
+  if('serviceWorker' in navigator && window.isSecureContext){
+    try{
+      navigator.serviceWorker.register(new Blob([`
+        self.addEventListener('install', e=>self.skipWaiting());
+        self.addEventListener('activate', e=>self.clients.claim());
+        self.addEventListener('fetch', e=>e.respondWith(fetch(e.request).catch(()=>new Response('Offline',{status:503}))));
+      `], {type:'application/javascript'})).catch(()=>{ /* sandboxed */ });
+    }catch(e){ /* no-op */ }
+  }
+}
+
+/* ===== INIT ===== */
+async function init(){
+  await loadState();
+  currentCurrency = state.currency || 'USD';
+  document.documentElement.setAttribute('data-theme', state.theme||'light');
+  $('#theme-toggle i').className = state.theme==='dark' ? 'fas fa-sun' : 'fas fa-moon';
+  wireEvents();
+  setupPWA();
+  updateOnlineStatus();
+  renderAll();
+  setSyncStatus('saved');
+}
+init();
+
+})();
+</script>
+</body>
+</html>

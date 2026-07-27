@@ -1563,27 +1563,30 @@ function updateOnlineStatus(){
 window.addEventListener('online', updateOnlineStatus);
 window.addEventListener('offline', updateOnlineStatus);
 
-/* ===== PWA SETUP (WORKING INSTALL BUTTON) ===== */
+/* ===== PWA SETUP (FULL) ===== */
 function setupPWA(){
   let deferredPrompt = null;
   
-  // Listen for beforeinstallprompt
+  // Listen for beforeinstallprompt event
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     const installBtn = $('#install-btn');
     if (installBtn) {
       installBtn.style.display = 'flex';
+      installBtn.textContent = 'Install App';
       installBtn.innerHTML = '<i class="fas fa-arrow-down-to-line"></i> Install App';
     }
     console.log('[PWA] beforeinstallprompt fired');
   });
 
-  // App installed event
+  // Handle app installed event
   window.addEventListener('appinstalled', () => {
-    toast('App installed successfully! 🎉');
+    toast('App installed successfully!');
     const installBtn = $('#install-btn');
-    if (installBtn) installBtn.style.display = 'none';
+    if (installBtn) {
+      installBtn.style.display = 'none';
+    }
     console.log('[PWA] App installed');
   });
 
@@ -1592,11 +1595,13 @@ function setupPWA(){
   if (installBtn) {
     installBtn.addEventListener('click', async () => {
       if (!deferredPrompt) {
-        toast('Install prompt not available. Try opening in Chrome or Edge.', 'info');
+        toast('Install prompt not available. Open in browser or use Chrome/Edge.', 'info');
         return;
       }
       try {
+        // Show the install prompt
         deferredPrompt.prompt();
+        // Wait for the user to respond to the prompt
         const result = await deferredPrompt.userChoice;
         console.log('[PWA] User choice:', result.outcome);
         if (result.outcome === 'accepted') {
@@ -1617,8 +1622,9 @@ function setupPWA(){
   // Register Service Worker
   if ('serviceWorker' in navigator && window.isSecureContext) {
     try {
+      // Create a simple service worker
       const swCode = `
-        const CACHE_NAME = 'buildmanager-pro-v5';
+        const CACHE_NAME = 'buildmanager-pro-v4';
         const urlsToCache = [
           '/',
           'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
@@ -1629,7 +1635,10 @@ function setupPWA(){
         self.addEventListener('install', (event) => {
           event.waitUntil(
             caches.open(CACHE_NAME)
-              .then((cache) => cache.addAll(urlsToCache).catch(() => {}))
+              .then((cache) => {
+                console.log('[SW] Caching app resources');
+                return cache.addAll(urlsToCache).catch(err => console.log('[SW] Cache error:', err));
+              })
               .then(() => self.skipWaiting())
           );
         });
@@ -1639,7 +1648,10 @@ function setupPWA(){
             caches.keys().then((cacheNames) => {
               return Promise.all(
                 cacheNames.map((cacheName) => {
-                  if (cacheName !== CACHE_NAME) return caches.delete(cacheName);
+                  if (cacheName !== CACHE_NAME) {
+                    console.log('[SW] Removing old cache:', cacheName);
+                    return caches.delete(cacheName);
+                  }
                 })
               );
             }).then(() => self.clients.claim())
@@ -1649,7 +1661,14 @@ function setupPWA(){
         self.addEventListener('fetch', (event) => {
           event.respondWith(
             caches.match(event.request)
-              .then((response) => response || fetch(event.request).catch(() => new Response('Offline', { status: 503 })))
+              .then((response) => {
+                if (response) {
+                  return response;
+                }
+                return fetch(event.request).catch(() => {
+                  return new Response('Offline content unavailable', { status: 503 });
+                });
+              })
           );
         });
       `;
@@ -1658,11 +1677,17 @@ function setupPWA(){
       const swUrl = URL.createObjectURL(swBlob);
       
       navigator.serviceWorker.register(swUrl, { scope: '/' })
-        .then((reg) => console.log('[SW] Registered:', reg))
-        .catch((err) => console.log('[SW] Registration error:', err));
+        .then((registration) => {
+          console.log('[SW] Registered successfully:', registration);
+        })
+        .catch((err) => {
+          console.log('[SW] Registration failed (expected in sandbox):', err);
+        });
     } catch (err) {
       console.log('[SW] Setup error:', err);
     }
+  } else {
+    console.log('[PWA] Service Worker not supported');
   }
 }
 
@@ -1678,7 +1703,7 @@ async function init(){
   renderAll();
   setSyncStatus('saved');
   
-  // Check if already installed as standalone
+  // Check if already installed
   if (window.matchMedia('(display-mode: standalone)').matches) {
     const installBtn = $('#install-btn');
     if (installBtn) installBtn.style.display = 'none';
